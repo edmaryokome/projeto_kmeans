@@ -1,0 +1,156 @@
+\documentclass[10pt,a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[top=2cm, bottom=2cm, left=1.5cm, right=1.5cm, columnsep=0.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+
+
+
+% ABNT para citações - substitui natbib
+\usepackage[alf,abnt-emphasize=bf,abnt-and-type=&,abnt-etal-list=0,abnt-etal-text=it]{abntex2cite}
+
+% Formatação de título
+\usepackage{titling}
+\pretitle{\begin{center}\LARGE\bfseries}
+\posttitle{\par\end{center}\vskip 0.5em}
+\preauthor{\begin{center}\normalsize}
+\postauthor{\end{center}}
+\predate{\begin{center}\small}
+\postdate{\par\end{center}\vskip 1em}
+
+% Configurações AJUSTADAS para eliminar espaços extras entre floats
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
+
+% Controle de float pages
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+
+\title{Estudo comparativo do cálculo de distância dos pontos no algoritmo K-means}
+
+\author{
+Edmar Augusto Yokome\textsuperscript{1*}, Geraldo Francisco Donegá Zafalon\textsuperscript{2}
+\\
+\normalsize \textsuperscript{*}Autor correspondente: edmar.yokome@ueg.br*\\
+}
+
+\date{}
+
+\begin{document}
+
+\twocolumn[
+\maketitle
+
+\begin{@twocolumnfalse}
+\begin{abstract}
+\noindent 
+Este trabalho investiga o desempenho do algoritmo K-Means ao empregar diferentes métricas de distância no processo de agrupamento. Tradicionalmente, o algoritmo utiliza a distância Euclidiana; no entanto, questiona-se se essa é a escolha mais adequada diante de alternativas como: as distâncias de Manhattan, Cosseno, Minkowski e Chebyshev. A análise concentra-se na avaliação dessas métricas sob a perspectiva da complexidade computacional, tempo de execução, número de comparações e trocas realizadas durante o processamento. Para isso, são utilizados conjuntos de dados com diferentes tamanhos, permitindo observar o comportamento de cada medida de distância em cenários variados. Os resultados obtidos são comparados com o desempenho da distância Euclidiana, visando identificar possíveis ganhos de eficiência e qualidade no processo de clusterização.
+
+\vspace{0.3em}
+\noindent \textbf{Palavras-chave:} Análise de Desempenho. K-Means. Medidas de Distância. Cálculo de Complexidade.
+\end{abstract}
+
+\selectlanguage{english}
+\begin{abstract}
+%\noindent \textbf{Abstract}
+
+\noindent
+This paper investigates the performance of the K-Means algorithm when employing different distance metrics in the clustering process. Traditionally, the algorithm uses the Euclidean distance; however, it is worth questioning whether this is the most appropriate choice compared to alternatives such as Manhattan, Cosine, Minkowski, and Chebyshev distances. The analysis focuses on evaluating these metrics from the perspective of computational complexity, execution time, number of comparisons, and swaps performed during processing. To this end, datasets of varying sizes are used, allowing observation of the behavior of each distance measure under different scenarios. The obtained results are compared with the performance of the Euclidean distance, aiming to identify potential gains in efficiency and quality in the clustering process.
+
+\vspace{0.3em}
+\noindent \textbf{Keywords:} Performance Analysis. K-Means. Distance Measures. Complexity Analysis.
+\end{abstract}
+
+\selectlanguage{portuguese}
+
+
+\end{@twocolumnfalse}
+
+\vspace{1em}
+]
+
+\section{Introdução}
+O agrupamento de dados é uma técnica amplamente utilizada na Ciência da Computação para a análise de dados, na qual elementos são organizados em grupos com base em características em comum. Essa abordagem tem como objetivo estruturar grandes volumes de dados de forma que se tornem mais compreensíveis e acessíveis à exploração. Além disso, o agrupamento contribui para a geração de insights, apoiando a tomada de decisões, especialmente em contextos que envolvem processos críticos. %\cite{Ferrari2016}
+
+
+Visão geral do projeto, objetivos, etc.
+
+\section{Materiais e Métodos}
+
+
+
+\subsection{Subseção 1 - caso necessário}
+
+% formato de lista em bullet-points
+\begin{itemize}
+\item \textbf{Item1} Descrição.
+\item \textbf{Item2} Descrição.
+\end{itemize}
+
+% formato de figuras 
+\begin{figure}[htbp]
+\centering
+%\includegraphics[width=0.85\columnwidth]{arquivo}
+\caption{Legenda da imagem}
+\label{fig:label_da_imagem}
+\end{figure}
+
+
+\begin{equation}
+\text{C}(i) = i + 3 - \frac{1}{3} \sum_{k}^{10} 2k
+\end{equation}
+
+%Lista enumerada
+\begin{enumerate}
+    \item Item1;
+    \item Item2;
+    \item Item3;
+\end{enumerate}
+
+\section{Resultados}
+
+Resultados da pesquisa
+
+% Exemplo de tabela
+\begin{table}[htbp]
+\centering
+\small
+\caption{Legenda}
+\label{tab:label_da_table}
+\begin{tabular}{@{}lccc@{}} %formato da tabela
+\toprule
+\textbf{col1} & \textbf{bol2} & \textbf{bol3} & \textbf{col4} \\
+\midrule 
+dado1 & dado2 & dado3 & dado4 \\
+dado1 & dado2 & dado3 & dado4 \\
+dado1 & dado2 & dado3 & dado4 \\
+dado1 & dado2 & dado3 & dado4 \\
+dado1 & dado2 & dado3 & dado4 \\
+\midrule
+\textbf{resultado1} & \textbf{resultado1} & \textbf{resultado1} & \textbf{resultado1} \\
+\bottomrule
+\end{tabular}
+\par\vspace{1mm}
+{\footnotesize nota de rodapé}
+\end{table}
+
+
+\section{Conclusão}
+
+Retomada da proposta, resultados e possíveis melhorias/trabalhos futuros.
+
+% a bibliografia deve estar no arquivo references.bib em formato bibtex
+\bibliographystyle{abntex2-alf}
+\bibliography{references}
+
+\end{document}
