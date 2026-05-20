@@ -9,7 +9,16 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{diagbox}
+\usepackage{amsmath}
 
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 
 % ABNT para citações - substitui natbib
@@ -80,13 +89,543 @@ This paper investigates the performance of the K-Means algorithm when employing 
 ]
 
 \section{Introdução}
-O agrupamento de dados é uma técnica amplamente utilizada na Ciência da Computação para a análise de dados, na qual elementos são organizados em grupos com base em características em comum. Essa abordagem tem como objetivo estruturar grandes volumes de dados de forma que se tornem mais compreensíveis e acessíveis à exploração. Além disso, o agrupamento contribui para a geração de insights, apoiando a tomada de decisões, especialmente em contextos que envolvem processos críticos. %\cite{Ferrari2016}
+O agrupamento de dados é uma técnica amplamente utilizada na Ciência da Computação para a análise de dados, na qual elementos são organizados em grupos com base em características em comum. Essa abordagem tem como objetivo estruturar grandes volumes de dados de forma que se tornem mais compreensíveis e acessíveis à exploração. Além disso, o agrupamento contribui para a geração de insights, apoiando a tomada de decisões, especialmente em contextos que envolvem processos críticos. \cite{Ferrari2016}
+
+Agrupamento de dados é usado para fazer análise de dados em áreas, como: aprendizagem de máquina, mineração de dados, reconhecimento de padrões, análise de imagens, bioinformática dentre outros.\cite{Ferrari2016}
+
+Para agrupar dados provenientes de um conjunto de dados (dataset), utilizam-se algoritmos específicos desenvolvidos para esse fim, como K-Means, K-Medoids e Agglomerative Clustering, entre outros. Cada um desses algoritmos possui características próprias e diferentes abordagens para realizar o processo de agrupamento.
+
+O algoritmo K-Means é um método de agrupamento baseado em centróides, que são pontos representativos de cada grupo. Inicialmente, esses centróides são definidos (geralmente de forma aleatória) e podem não coincidir com instâncias reais do conjunto de dados. Em seguida, cada elemento é associado ao centróide mais próximo, e os centróides são recalculados como a média dos pontos pertencentes a cada grupo. Esse processo é repetido iterativamente até a convergência.\cite{AMARAL2019}
+
+Uma das formas mais utilizadas para calcular a distância entre dois pontos no plano cartesiano é a Distância Euclidiana. No entanto, autores como \cite{AMARAL2019} destacam que outras métricas também podem ser empregadas nesse contexto. Diante disso, surgem questionamentos relevantes, como: por que utilizar a Distância Euclidiana em detrimento de outras medidas? Quais seriam os impactos, positivos e negativos, da adoção de diferentes métricas no cálculo da distância entre pontos?
+
+Este trabalho investiga a substituição da Distância Euclidiana por outras métricas de cálculo de distância entre pontos no plano cartesiano. A análise concentra-se em aspectos como complexidade algorítmica, tempo de execução, número de comparações e trocas, utilizando bases de dados com diferentes tamanhos. Além disso, avalia-se o comportamento dessas métricas à medida que o volume de dados aumenta. 
+
+Este trabalho tem como objetivo geral investigar a modificação do cálculo de distâncias no algoritmo K-Means, analisando os impactos dessa alteração na complexidade computacional e nos resultados obtidos. Para isso, são definidos como objetivos específicos: estudar o funcionamento do algoritmo K-Means e da Distância Euclidiana, bem como explorar e implementar métricas alternativas; avaliar a complexidade associada a essas modificações; gerar representações gráficas para visualização dos resultados; e, por fim, realizar uma análise comparativa do desempenho das diferentes abordagens.
+
+Para o desenvolvimento deste trabalho, inicialmente foi realizada uma revisão bibliográfica, com levantamento de artigos e livros a fim de fundamentar o conteúdo teórico e orientar a definição da abordagem adotada. Em seguida, foram investigadas métricas alternativas à Distância Euclidiana, por meio de estudos e testes preliminares. Posteriormente, o algoritmo K-Means foi implementado na linguagem C, incorporando as diferentes métricas de distância. Também foi desenvolvido um programa, na mesma linguagem, para geração de bases de dados com tamanhos variados e presença de ruído. Na sequência, foram analisados aspectos de complexidade computacional, bem como realizadas execuções experimentais considerando diferentes tamanhos de base de dados, avaliando-se métricas como tempo de execução, número de comparações e número de trocas — neste trabalho, definido como a quantidade de mudanças de agrupamento. Por fim, foram elaborados gráficos na linguagem Python para possibilitar a análise comparativa dos resultados obtidos a partir das modificações no cálculo da distância no algoritmo K-Means. 
+
+Com base na revisão bibliográfica realizada e na proposta do trabalho, destaca-se como principal contribuição a análise do algoritmo sob a perspectiva de desempenho, considerando aspectos como complexidade computacional, tempo de execução, número de comparações e quantidade de trocas de agrupamento, a partir de bases de dados especialmente desenvolvidas para esse fim. Além disso, foram elaborados gráficos comparativos que permitem avaliar os resultados obtidos em relação ao modelo tradicional do algoritmo K-Means.
+
+Este artigo está organizado da seguinte forma: a Seção 2 apresenta a fundamentação teórica relacionada ao tema; a Seção 3 descreve os materiais e métodos, incluindo a metodologia adotada no desenvolvimento do estudo; a Seção 4 discute os resultados obtidos; e a Seção 5 apresenta as conclusões da pesquisa.
+ 
+\section{Fundamentação Teórica}
+Agrupamento é o nome dado ao processo de separar (particionar ou segmentar) um conjunto de objetos em grupos.O agrupamento de dados considera dados de entrada não rotulados, ou seja, o grupo (classe) ao qual cada dado de entrada (objeto) pertence não é conhecido a priori. Como os rótulos das classes dos dados de treinamento não são conhecidos a priori, esse processo é denominado treinamento não supervisionado (ou aprendizagem não supervisionada). \cite{Ferrari2016}
+
+No agrupamento, os objetos são agrupados com o objetivo de maximizar a distância interclasse e minimizar a distância intraclasse, ou seja, maximizar a similaridade intraclasse e minimizar a similaridade interclasse. Portanto, um cluster pode ser definido como uma coleção de objetos similares uns aos outros e dissimilares aos objetos pertencentes a outros grupos. \cite{Ferrari2016}
+
+Entre os principais algoritmos de agrupamento destacam-se: o k-means e o k-medoids, bem como suas variações. Além desses, os métodos hierárquicos, especialmente single-link e complete-link, também apresentam ampla aplicação em tarefas de clusterização. Outros modelos relevantes incluem algoritmos baseados em densidade, como o DBSCAN, abordagens fundamentadas em grafos, como o MST, e técnicas de particionamento não exclusivo, a exemplo do fuzzy k-means. \cite{Ferrari2016} Este trabalho tem como foco o algoritmo K-Means. Dessa forma, para uma melhor compreensão do seu funcionamento, considere a Figura \ref{fig:semgrupo}:
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.4\textwidth]{ponto.png}
+    \caption{Dados no plano cartesiano}
+    {\small Fonte: própria.}
+    \label{fig:semgrupo}
+\end{figure}
+
+Deseja-se agrupar os pontos distribuídos no plano cartesiano considerando três grupos distintos. Inicialmente, são definidos aleatoriamente três centróides, que representam os centros dos agrupamentos. Em seguida, para cada ponto do plano cartesiano, calcula-se a distância em relação a cada centróide. Cada ponto é então associado ao grupo cujo centróide apresenta a menor distância. Após a etapa de agrupamento de todos os pontos, os centróides são recalculados com base nos elementos pertencentes a cada grupo, e o processo de cálculo das distâncias é executado novamente. O algoritmo encerra sua execução quando os centróides deixam de se movimentar ou quando é atingido o número máximo de iterações previamente estabelecido. A Figura \ref{fig:comgrupo} apresentam os pontos agrupados:
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.4\textwidth]{agrupado.png}
+    \caption{Dados no plano cartesiano agrupados}
+    {\small Fonte: própria.}
+    \label{fig:comgrupo}
+\end{figure}
+
+Ao analisar a Figura \ref{fig:comgrupo}, observa-se que foram necessárias nove iterações para a convergência do algoritmo, indicando que os centróides estabilizaram suas posições após nove atualizações sucessivas, realizadas a partir dos cálculos de distância entre os pontos e os centróides.
+
+O algoritmo K-Means é representado no pseudocódigo \ref{alg:kmeans}:
 
 
-Visão geral do projeto, objetivos, etc.
+%inicio algoritmo
+\begin{algorithm}[H]
+\floatname{algorithm}{Pseudocódigo}
+\caption{Algoritmo do K-Means adaptado de \cite{AMARAL2019}.}
+\label{alg:kmeans}
+\begin{algorithmic}[1]
+
+\Require $k$ (número de grupos), $data$ (base com $n$ objetos e $m$ atributos), $it\_max$
+\Ensure $G$ (rótulos dos objetos), $C$ (centroides)
+
+\State Inicializar $C$ escolhendo $k$ objetos aleatórios
+\State $it \gets 0$
+
+\While{$it < it\_max$ \textbf}
+
+    \State Calcular distâncias $D(n \times k)$ entre objetos e centroides
+
+    \For{$i = 1$ até $n$}
+        \State Atribuir $G[i]$ ao centróide mais próximo
+    \EndFor
+
+    \For{$i = 1$ até $k$}
+        \State Atualizar $C[i]$ como a média dos objetos do grupo $i$
+    \EndFor
+
+    %\State Calcular nova função de custo $fc\_nova$
+    %\State $dif\_fc \gets fc - fc\_nova$
+    %\State $fc \gets fc\_nova$
+    %\State $it \gets it + 1$
+
+\EndWhile
+
+\end{algorithmic}
+\end{algorithm}
+
+%fim algoritmo
+
+Inicialmente, são definidos o número desejado de agrupamentos, a base de dados a ser processada e o número máximo de iterações do algoritmo. Como resultado, obtêm-se os dados agrupados e os centróides estabilizados. Em seguida, os centróides iniciais são definidos aleatoriamente. No laço de repetição, iniciado na linha 3 e finalizado na linha 11, são executadas as etapas de cálculo da distância entre os pontos e os centróides, atribuição dos pontos aos respectivos grupos e atualização dos centróides. Destaca-se que o foco deste trabalho está justamente na análise das operações executadas dentro desse laço de repetição.
+
+
+
+O algoritmo k-means tem como objetivo dividir um conjunto de n objetos em grupos. Onde nesse processo, busca-se maximizar a similaridade entre os elementos pertencentes ao mesmo grupo e minimizar a similaridade entre grupos distintos. Utilizando o conceito de centroide, que representa o valor médio dos objetos de cada agrupamento e atua como centro de gravidade do cluster. Durante a execução do algoritmo, cada objeto é associado ao grupo cujo centróide esteja mais próximo, permitindo a formação iterativa de agrupamentos mais homogêneos. \cite{Ferrari2016} 
+
+A métrica de distância exerce papel fundamental na qualidade dos resultados obtidos pelo processo de agrupamento, visto que diferentes métricas enfatizam propriedades geométricas específicas dos dados. No algoritmo K-Means, a Distância Euclidiana é tradicionalmente utilizada para calcular a proximidade entre os dados e os centróides dos clusters. Contudo, outras métricas também podem ser empregadas, dependendo das características do conjunto de dados e do objetivo da análise. Nesse contexto, os subtópicos \ref{sec:euclidiana}, \ref{sec:manhattan}, \ref{sec:cosseno}, \ref{sec:minkowski} e \ref{sec:chebyshev} apresentam, respectivamente, as métricas Euclidiana, Manhattan, Cosseno, Minkowski e Chebyshev, destacando suas principais características e aplicações no processo de clusterização. \cite{AlKhamees2026}
+
+
+
+\subsection{Distância Euclidiana} %ver o termo correto
+\label{sec:euclidiana}
+
+A distância Euclidiana é uma das métricas mais tradicionais e amplamente utilizadas em problemas de classificação e agrupamento de dados. Fundamentada no Teorema de Pitágoras, essa métrica representa a menor distância entre dois pontos em um espaço Euclidiano. \cite{Rodrigues2018}
+A Figura \ref{fig:euclidiana} apresenta a fórmula da Distância Euclidiana:
+%Fórmula da Distãncia Euclidiana
+\begin{figure}[h!]
+   \centering
+      \[
+         d_{ij} = \left( \sum_{k=1}^{m} (x_{ik} - x_{jk})^2 \right)^{1/2}
+      \]
+      \vspace{-0.7cm}
+       \caption{Distãncia Euclidiana}
+       \label{fig:euclidiana}
+       \vspace{0.0cm}
+       {\small Fonte: \cite{Ferrari2016}.}
+\end{figure}
+
+Para demonstrar a aplicação da fórmula, simulou-se o cálculo entre os pontos A = (2, 3) e B = (5, 7). A Figura \ref{fig:euclidianacalc} ilustra a aplicação da fórmula da Figura \ref{fig:euclidiana} para determinar a distância entre esses dois pontos.
+
+
+\begin{figure}[h!]
+   \centering
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+   \vspace{-0.7cm}
+   \caption{Desenvolvimento da fórmula}
+   \label{fig:euclidianacalc}
+   \vspace{0.0cm}
+   {\small Fonte: Própria.}
+\end{figure}
+
+Resolvendo os cálculos: 
+\begin{align*}
+    d &= \sqrt{3^2 + 4^2} \\
+    d &= \sqrt{9 + 16}    \\
+    d &= \sqrt{25}        \\
+    d &= 5
+\end{align*}
+O valor 5 é a distância entre os pontos A e B. 
+
+%Fim do subtópico da Distância Euclidiana
+
+
+\subsection{Distância de Manhattan} %ver o termo correto
+\label{sec:manhattan}
+
+A Distância de Manhattan calcula a distância entre duas amostras de dados como a soma das diferenças absolutas de suas coordenadas cartesianas. \cite{AlKhamees2026}. A Figura \ref{fig:manhattan} apresenta a fórmula dessa métrica:
+
+
+%Fórmula da Distância de Manhattan
+\begin{figure}[h!]
+   \centering
+      \[
+         d_{ij} = \sum_{k=1}^{m} \left| x_{ik} - x_{jk} \right|
+      \]
+      \vspace{-0.7cm}
+       \caption{Distãncia de Manhattan}
+       \label{fig:manhattan}
+       \vspace{0.0cm}
+       {\small Fonte: \cite{Ferrari2016}.}   
+\end{figure}
+
+Para um melhor entendimento da fórmula, a mesma foi desenvolvida usando os pontos: A=(2,3) e B=(5,7). Resolução da fórmula:
+
+\[
+d = |5-2| + |7-3|
+\]
+\[
+d = |3| + |4|
+\]
+\[
+d = 3 + 4
+\]
+\[
+d = 7
+\] 
+
+Ao desenvolver a fórmula, é possível verificar que inicialmente são realizadas as subtrações entre: \(x_{2}\)  e \(x_{1}\)  e depois \(y_{2}\)  e \(y_{1}\) . Em seguida são calculados seus respectivos valores absolutos e, posteriormente, feito o somatório desses valores. 
+%Fim do subtópico da Distância de Manhattan
+
+\subsection{Medida de Cosseno} %ver o termo correto
+\label{sec:cosseno}
+
+A medida de cosseno mede o grau do ângulo entre vetores não nulos, ignorando a magnitude, ou seja, não mede diretamente a distância entre pontos, mas o grau de similaridade angular entre os pontos \cite{AlKhamees2026}. A figura \ref{fig:cosseno} apresenta a fórmula dessa medida:
+
+%Fórmula da medida de Coseno 
+\begin{figure}[h!]
+   \centering
+      \[
+         \phi_{ij} = \frac{\sum_{k=1}^{m} x_{ik} \, x_{jk}}
+          {\sqrt{\sum_{k=1}^{m} x_{ik}^{2}} \cdot \sqrt{\sum_{k=1}^{m} x_{jk}^{2}}}
+       \]
+       \vspace{-0.7cm}
+       \caption{Medida de Cosseno}
+       \label{fig:cosseno}
+       \vspace{0.0cm}
+       {\small Fonte: \cite{Ferrari2016}.}
+\end{figure}
+
+A fórmula por ser complexa foi dividida em três partes e utilizando os pontos:  A=(2,3) e B=(5,7):
+
+Primeira parte: calcular o produto escalar dos pontos:
+\[
+(2 \times 5) + (3 \times 7) = 10 + 21 = 31
+\] 
+
+Segunda parte: calcular a norma do vetor A:
+\[
+\|A\| = \sqrt{2^{2} + 3^{2}}
+= \sqrt{4 + 9}
+= \sqrt{13}
+\] 
+
+Terceira parte: calcular a norma do vetor B:
+\[
+\|B\| = \sqrt{5^{2} + 7^{2}}
+= \sqrt{25 + 49}
+= \sqrt{74}
+\] 
+
+Colocando os valores calculados na fórmula e calculando a similaridade do cosseno:
+\[
+\cos(\theta) =
+\frac{31}{\sqrt{13} \cdot \sqrt{74}}
+\]
+
+\[
+\cos(\theta) =
+\frac{31}{\sqrt{962}}
+\]
+
+\[
+\cos(\theta) \approx
+\frac{31}{31.016}
+\approx 0.9995
+\] 
+
+Para realizar o agrupamento dos pontos é necessário calcular a dissimilaridade do cosseno:
+
+\[
+d = 1 - 0.9995
+\]
+\[
+d \approx 0.0005
+\] 
+
+Assim o valor: 0.0005 é a diferença angular entre os pontos A e B, sendo utilizado como medida de similaridade para auxiliar na identificação do agrupamento ao qual o ponto analisado pertence.
+
+
+
+
+%Fim do subtópico da Medida de Cosseno
+
+
+\subsection{Distância de Minkowski} %ver o termo correto
+\label{sec:minkowski}
+
+%Fórmula da Distância de Minkwoski
+\begin{figure}[h!]
+   \centering
+      \[
+         d_{ij} = \left( \sum_{k=1}^{m} \left( x_{ik} - x_{jk} \right)^r \right)^{\frac{1}{r}}, \quad (r \geq 1)
+      \]
+      \vspace{-0.7cm}
+      \caption{Distància de Minkwoski}
+       \label{fig:minkwoski}
+       \vspace{0.0cm}
+       {\small Fonte: \cite{Ferrari2016}.}     
+\end{figure}
+%Fim do subtópico da Medida de Minkwoski
+
+
+
+\subsection{Distância de Chebyshev} %ver o termo correto
+\label{sec:chebyshev}
+
+%Fórmula da Distância de Chebyshev
+\begin{figure}[h!]
+   \centering
+      \[
+          d(x,y) = \max_i \left| x_i - y_i \right|
+      \]
+       \vspace{-0.7cm}
+       \caption{Distància de Chebyshev}
+       \label{fig:chebyshev}
+       \vspace{0.0cm}
+       {\small Fonte: \cite{AlKhamees2026}.} 
+      
+\end{figure}
+%Fim do subtópico da Medida de Chebyshev
+
+
+\subsection{Trabalhos Relacionados} %ver o termo correto
+\label{sec:chebyshev}
+
 
 \section{Materiais e Métodos}
+Este tópico descreve a metodologia adotada, abrangendo: o levantamento teórico, a implementação (codificação) e a análise algorítmica do trabalho proposto.
 
+Para o desenvolvimento deste trabalho, inicialmente foram realizados levantamentos bibliográficos por meio de técnicas de revisão sistemática da literatura. Para isso, utilizou-se o Google Scholar como base de pesquisa, sendo aplicada a seguinte chave de busca:
+
+\begin{quote}
+(k-means OR k-médias)
+AND
+(distância euclidiana OR euclidean distance
+OR distância Manhattan
+OR medida de Cosseno
+OR cosine similarity
+OR distância de Chebyshev
+OR distância de Minkowski
+OR distance metric)
+AND
+(complexidade OR complexity
+OR tempo de execução
+OR runtime
+OR comparações
+OR comparisons
+OR agrupamentos
+OR clustering)
+\end{quote}
+
+
+Nesta foi selecionado artigos correlatos, definido a abrangência do trabalho, desenvolvido novas ideias e foi levantados diferenciais que o trabalho poderia ter. Também foram utilizadas referências bibliográficas de livros para o embasamento teórico do tema.
+
+
+
+%Tabela de tempo
+\begin{table*}[htbp]
+\centering
+\caption{Tempo de execução dos algoritmos de distância}
+\label{tab:distancias}
+
+\begin{tabular}{|p{5cm}|c|c|c|c|c|}
+\hline
+
+\diagbox[width=5cm]{Medida de Distância}{Quantidade de Pontos}
+& \textbf{100.000}
+& \textbf{200.000}
+& \textbf{300.000}
+& \textbf{400.000}
+& \textbf{500.000} \\
+\hline
+
+Distância Euclidiana 
+& 0.474000 s 
+& 2.657000 s 
+& 2.762000 s 
+& 4.195000 s 
+& 4.575000 s \\
+\hline
+
+Distância de Manhattan 
+& 0.188000 s 
+& 0.315000 s 
+& 0.436000 s 
+& 0.651000 s 
+& 0.762000 s \\
+\hline
+
+Medida do Cosseno 
+& 0.521000 s 
+& 0.674000 s 
+& 1.175000 s 
+& 1.417000 s 
+& 3.084000 s \\
+\hline
+
+Distância de Minkowski 
+& 1.577000 s 
+& 4.776000 s 
+& 3.588000 s 
+& 7.506000 s 
+& 22.687000 s \\
+\hline
+
+Distância de Chebyshev 
+& 0.148000 s 
+& 0.263000 s 
+& 0.738000 s 
+& 0.911000 s 
+& 0.515000 s \\
+\hline
+
+\end{tabular}
+
+
+\vspace{0.2cm}
+{\small Fonte: Elaborado pelo autor.}
+
+\end{table*}
+%fim tabela de tempo
+
+
+
+
+Próxima tabela:
+
+%Tabela comparações
+
+\begin{table*}[htbp]
+\centering
+\caption{Comparação das Medidas de Distância}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+
+\diagbox{\textbf{Medida de Distância}}{\textbf{Quantidade de Pontos}} 
+& \textbf{100.000} 
+& \textbf{200.000} 
+& \textbf{300.000} 
+& \textbf{400.000} 
+& \textbf{500.000} \\
+
+\hline
+
+Distância Euclidiana 
+& 129.606 
+& 248.718 
+& 324.802 
+& 422.861 
+& 622.146 \\
+
+\hline
+
+Distância de Manhattan 
+& 148.033 
+& 253.224 
+& 420.444 
+& 546.363 
+& 736.598 \\
+
+\hline
+
+Medida do Cosseno 
+& 132.791 
+& 278.611 
+& 325.896 
+& 556.506 
+& 698.874 \\
+
+\hline
+
+Distância de Minkowski 
+& 128.325 
+& 213.503 
+& 374.523 
+& 418.191 
+& 847.726 \\
+
+\hline
+
+Distância de Chebyshev 
+& 151.990 
+& 202.186 
+& 446.280 
+& 565.517 
+& 587.053 \\
+
+\hline
+
+\end{tabular}
+
+\label{tab:comparacao_distancias}
+
+\vspace{0.2cm}
+{\small Fonte: \cite{Ferrari2016}.} 
+
+\end{table*}
+
+%fim tabela comparações
+
+
+%Tabela trocas
+\begin{table*}[htbp]
+   \centering
+   \caption{Quantidade de operações realizadas pelas métricas de distância}
+   \label{tab:operacoes}
+
+   \begin{tabular}{|l|c|c|c|c|c|}
+      \hline
+
+      \diagbox{Medida de Distância}{Quantidade de Pontos}
+      & \textbf{100.000}
+      & \textbf{200.000}
+      & \textbf{300.000}
+      & \textbf{400.000}
+      & \textbf{500.000} \\
+      
+      \hline
+
+      Distância Euclidiana 
+      & 129.606 
+      & 248.718 
+      & 324.802 
+      & 422.861 
+      & 622.146 \\
+      \hline
+
+      Distância de Manhattan 
+      & 148.033 
+      & 253.224 
+      & 420.444 
+      & 546.363 
+      & 736.598 \\
+      \hline
+
+      Medida do Cosseno 
+      & 132.791 
+      & 278.611 
+      & 325.896 
+      & 556.506 
+      & 698.874 \\
+      \hline
+
+      Distância de Minkowski 
+      & 128.325 
+      & 213.503 
+      & 374.523 
+      & 418.191 
+      & 847.726 \\
+      \hline
+
+      Distância de Chebyshev 
+      & 151.990 
+      & 202.186 
+      & 446.280 
+      & 565.517 
+      & 587.053 \\
+      \hline
+
+   \end{tabular}
+
+   \vspace{0.2cm}
+   {\small Fonte: Elaborado pelo autor.}
+
+\end{table*}
+%fim tabela trocas
 
 
 \subsection{Subseção 1 - caso necessário}
@@ -106,6 +645,7 @@ Visão geral do projeto, objetivos, etc.
 \end{figure}
 
 
+
 \begin{equation}
 \text{C}(i) = i + 3 - \frac{1}{3} \sum_{k}^{10} 2k
 \end{equation}
@@ -117,37 +657,54 @@ Visão geral do projeto, objetivos, etc.
     \item Item3;
 \end{enumerate}
 
+
+%pseudocódigo gera dados
+
+
+\begin{algorithm}[H]
+\caption{Geração de Dados}
+\begin{algorithmic}[1]
+
+\State Definir quantidade de pontos e dimensões
+\State Criar arquivo de saída
+\State Inicializar gerador aleatório
+
+\For{cada ponto}
+    
+    \If{probabilidade menor que 80\%}
+        \State Escolher um dos três clusters
+        \State Gerar ponto próximo ao cluster
+        \State Adicionar pequeno ruído
+    \Else
+        \State Gerar ponto aleatório
+    \EndIf
+    
+    \State Salvar ponto no arquivo
+    
+\EndFor
+
+\State Fechar arquivo
+
+\end{algorithmic}
+\end{algorithm}
+
+%fim pseudocódigo gera dados
+
+
+
 \section{Resultados}
 
 Resultados da pesquisa
 
-% Exemplo de tabela
-\begin{table}[htbp]
-\centering
-\small
-\caption{Legenda}
-\label{tab:label_da_table}
-\begin{tabular}{@{}lccc@{}} %formato da tabela
-\toprule
-\textbf{col1} & \textbf{bol2} & \textbf{bol3} & \textbf{col4} \\
-\midrule 
-dado1 & dado2 & dado3 & dado4 \\
-dado1 & dado2 & dado3 & dado4 \\
-dado1 & dado2 & dado3 & dado4 \\
-dado1 & dado2 & dado3 & dado4 \\
-dado1 & dado2 & dado3 & dado4 \\
-\midrule
-\textbf{resultado1} & \textbf{resultado1} & \textbf{resultado1} & \textbf{resultado1} \\
-\bottomrule
-\end{tabular}
-\par\vspace{1mm}
-{\footnotesize nota de rodapé}
-\end{table}
+
 
 
 \section{Conclusão}
 
 Retomada da proposta, resultados e possíveis melhorias/trabalhos futuros.
+
+%testo teste
+
 
 % a bibliografia deve estar no arquivo references.bib em formato bibtex
 \bibliographystyle{abntex2-alf}
