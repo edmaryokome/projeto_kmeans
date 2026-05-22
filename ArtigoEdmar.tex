@@ -13,12 +13,19 @@
 \usepackage{algpseudocode}
 \usepackage{tikz}
 \usepackage{diagbox}
-\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{dblfloatfix}
+\usepackage{cuted}
+\usepackage{array}
+\usepackage{tabularx}
+
+\newcounter{quadro}
+
+\DeclareCaptionType{quadro}[Quadro][Lista de Quadros]
+
 
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+
 
 
 % ABNT para citações - substitui natbib
@@ -140,9 +147,9 @@ O algoritmo K-Means é representado no pseudocódigo \ref{alg:kmeans}:
 
 
 %inicio algoritmo
-\begin{algorithm}[H]
+\begin{algorithm}[htbp]
 \floatname{algorithm}{Pseudocódigo}
-\caption{Algoritmo do K-Means adaptado de \cite{AMARAL2019}.}
+\caption{Algoritmo do K-Means adaptado de \cite{Ferrari2016}.}
 \label{alg:kmeans}
 \begin{algorithmic}[1]
 
@@ -152,9 +159,9 @@ O algoritmo K-Means é representado no pseudocódigo \ref{alg:kmeans}:
 \State Inicializar $C$ escolhendo $k$ objetos aleatórios
 \State $it \gets 0$
 
-\While{$it < it\_max$ \textbf}
+\While{$it < it\_max$}
 
-    \State Calcular distâncias $D(n \times k)$ entre objetos e centroides
+    \State calcular Distancia $D(n \times k)$ entre objetos e centroides
 
     \For{$i = 1$ até $n$}
         \State Atribuir $G[i]$ ao centróide mais próximo
@@ -336,15 +343,12 @@ d \approx 0.0005
 
 Assim o valor: 0.0005 é a diferença angular entre os pontos A e B, sendo utilizado como medida de similaridade para auxiliar na identificação do agrupamento ao qual o ponto analisado pertence.
 
-
-
-
 %Fim do subtópico da Medida de Cosseno
-
 
 \subsection{Distância de Minkowski} %ver o termo correto
 \label{sec:minkowski}
 
+A Distância de Minkowski é conhecida como a métrica de distância generalizada \cite{AlKhamees2026}. A Figura \ref{fig:minkwoski} apresenta a fórmula desta métrica:
 %Fórmula da Distância de Minkwoski
 \begin{figure}[h!]
    \centering
@@ -357,12 +361,32 @@ Assim o valor: 0.0005 é a diferença angular entre os pontos A e B, sendo utili
        \vspace{0.0cm}
        {\small Fonte: \cite{Ferrari2016}.}     
 \end{figure}
+
+Na variável “r”, caso seja inserido o valor 1, será a Distância de Manhattan e caso seja atribuído o valor 2 será a Distância Euclidiana. Para diferenciar dos resultados apresentado nos subtópicos \ref{sec:euclidiana} e \ref{sec:manhattan} será considerado para “r” o valor 3. Desenvolvendo a fórmula com os pontos A=(2,3) e B=(5,7):
+
+\[
+d = \left( |5 - 2|^3 + |7 - 3|^3 \right)^{1/3}
+\]
+\[
+d = \left( 3^3 + 4^3 \right)^{1/3}
+\]
+\[
+d = \left( 27 + 64 \right)^{1/3}
+\]
+\[
+d = 91^{1/3}
+\]
+\[
+d \approx 4,497
+\] 
+
+Ao analisar o desenvolvimento da fórmula, observa-se que a atribuição do valor r=3 resulta na utilização de potências cúbicas durante o cálculo da distância. Esse fator pode impactar diretamente o tempo de execução da métrica, uma vez que operações de potenciação tendem a demandar maior custo computacional em comparação com operações aritméticas mais simples.
 %Fim do subtópico da Medida de Minkwoski
-
-
 
 \subsection{Distância de Chebyshev} %ver o termo correto
 \label{sec:chebyshev}
+
+Conhecida como distância máxima ou norma $L_{\infty}$, essa métrica considera a maior variação entre as características analisadas, utilizando como medida de distância a máxima diferença observada entre dois pontos em qualquer dimensão do espaço de dados. \cite{AlKhamees2026}. A Figura \ref{fig:chebyshev} apresenta a fórmula:
 
 %Fórmula da Distância de Chebyshev
 \begin{figure}[h!]
@@ -377,18 +401,39 @@ Assim o valor: 0.0005 é a diferença angular entre os pontos A e B, sendo utili
        {\small Fonte: \cite{AlKhamees2026}.} 
       
 \end{figure}
+
+Considerando os pontos: A=(2,3) e B=(5,7) a aplicação da fórmula ficaria da seguinte forma:
+
+\[
+d = \max \left( |x_1 - x_2|,\ |y_1 - y_2| \right)
+\]
+
+Passo 1: Calculando as diferenças:
+\[
+|5 - 2| = 3
+\]
+\[
+|7 - 3| = 4
+\] 
+
+Passo 2: Aplicando o máximo
+
+\[
+d = \max(3,4)
+\]
+\[
+d = 4
+\]
+
+A maior diferença obtida entre os pontos foi igual a 4. Dessa forma, esse valor é utilizado como medida da distância de Chebyshev entre os dois pontos analisados.
+
+
 %Fim do subtópico da Medida de Chebyshev
 
 
 \subsection{Trabalhos Relacionados} %ver o termo correto
-\label{sec:chebyshev}
-
-
-\section{Materiais e Métodos}
-Este tópico descreve a metodologia adotada, abrangendo: o levantamento teórico, a implementação (codificação) e a análise algorítmica do trabalho proposto.
-
-Para o desenvolvimento deste trabalho, inicialmente foram realizados levantamentos bibliográficos por meio de técnicas de revisão sistemática da literatura. Para isso, utilizou-se o Google Scholar como base de pesquisa, sendo aplicada a seguinte chave de busca:
-
+\label{sec:trabrelacionado}
+Nesta etapa, foram levantados conceitos teóricos e identificadas abordagens metodológicas relevantes para a construção do trabalho. Assim foram realizadas buscas na literatura científica com o objetivo de identificar trabalhos relacionados à temática proposta. Para isso, utilizou-se a seguinte chave de pesquisa na plataforma Google Scholar:
 \begin{quote}
 (k-means OR k-médias)
 AND
@@ -409,10 +454,331 @@ OR agrupamentos
 OR clustering)
 \end{quote}
 
+Na plataforma Google Scholar, inicialmente foram realizadas leituras dos resumos dos artigos encontrados. Quando identificado que determinado estudo poderia contribuir para o desenvolvimento desta pesquisa, procedia-se a uma análise mais aprofundada do conteúdo. Nos casos em que foram identificadas contribuições relevantes para o trabalho, o artigo era selecionado e armazenado para posterior utilização. O Quadro  \ref{qua:trabalhos_relacionados} apresenta os artigos selecionados para o desenvolvimento deste estudo.
 
-Nesta foi selecionado artigos correlatos, definido a abrangência do trabalho, desenvolvido novas ideias e foi levantados diferenciais que o trabalho poderia ter. Também foram utilizadas referências bibliográficas de livros para o embasamento teórico do tema.
+\begin{strip}
+
+\centering
+
+\captionsetup{type=quadro}
+\captionof{quadro}{Trabalhos relacionados e suas contribuições}
+\label{qua:trabalhos_relacionados}
+
+\renewcommand{\arraystretch}{1.5}
+
+\begin{tabular}{|p{3cm}|p{10cm}|p{5cm}|}
+\hline
+
+\textbf{Autor(es) e Ano}
+&
+\textbf{Objetivo do Artigo}
+&
+\textbf{Contribuições}
+\\
+
+\hline
+
+Hussein et al. (2026)
+&
+O objetivo do artigo é propor e avaliar uma versão aprimorada do algoritmo K-Means para análise de dados médicos, buscando superar limitações relacionadas ao uso de uma única métrica de distância e à ausência de mecanismos de refinamento dos agrupamentos.
+&
+Levantamentos teóricos sobre métricas de distância.
+\\
+
+\hline
+
+É. O. Rodrigues (2018)
+&
+O objetivo deste artigo é propor e avaliar uma nova métrica baseada na combinação das distâncias Minkowski e Chebyshev, visando maior eficiência computacional.
+&
+Ideia de desenvolvimento na fase experimental.
+\\
+
+\hline
+
+Martín (2020)
+&
+O objetivo deste artigo é realizar um estudo comparativo sobre o desempenho de diferentes métricas de distância aplicadas à segmentação de imagens utilizando FCM e K-Means.
+&
+Levantamentos teóricos sobre métricas de distância.
+\\
+
+\hline
+
+\end{tabular}
+
+\vspace{0.3cm}
+
+\small Fonte: Elaborado pelo autor.
+
+\end{strip}
+
+Ao analisar os artigos selecionados e compará-los com a proposta desta pesquisa, identificou-se que o principal diferencial deste trabalho está no foco específico em análise de algoritmos. Diferentemente dos estudos encontrados na literatura, esta pesquisa concentra-se na análise assintótica e na avaliação de métricas relacionadas ao desempenho computacional, como tempo de execução, número de comparações realizadas e alterações nos agrupamentos durante o processo de clusterização.
 
 
+\section{Materiais e Métodos}
+Este tópico trata dos métodos e técnicas utilizadas para o desenvolvimento do trabalho proposto, onde são levados em consideração: definição da base de dados, implementação (codificação) do trabalho e análise algorítmica. 
+
+\subsection{Base de Dados} %ver o termo correto
+\label{sec:basedados}
+
+Na fase de implementação do projeto, o primeiro aspecto considerado foi a definição da base de dados a ser utilizada nos testes das etapas subsequentes. Inicialmente, foram realizadas pesquisas em bases de dados já existentes; entretanto, optou-se pelo desenvolvimento de um programa para geração da própria base de dados. Essa decisão foi motivada por fatores como a flexibilidade na definição do volume de dados, dimensionalidade da base e características dos dados. O pseudocódigo deste programa apresentado em Algoritmo \ref{alg:basedados}. 
+
+%pseudocódigo gera dados
+\begin{algorithm}[htbp]
+\floatname{algorithm}{Pseudocódigo}
+\caption{Geração da Base Dados}
+\label{alg:basedados}
+\begin{algorithmic}[1]
+
+\State Definir quantidade de pontos e dimensões
+\State Criar arquivo de saída
+\State Inicializar gerador aleatório
+
+\For{cada ponto}
+    
+    \If{probabilidade menor que 80\%}
+        \State Escolher um dos três clusters
+        \State Gerar ponto próximo ao cluster
+        \State Adicionar pequeno ruído
+    \Else
+        \State Gerar ponto aleatório
+    \EndIf
+    
+    \State Salvar ponto no arquivo
+    
+\EndFor
+
+\State Fechar arquivo
+
+\end{algorithmic}
+\end{algorithm}
+%fim pseudocódigo gera dados
+
+
+Inicialmente, são definidos a quantidade de pontos e a dimensionalidade da base de dados. Em seguida, é criado um arquivo para armazenamento dos dados gerados e inicializado o mecanismo de geração aleatória. Do conjunto total de dados, 80\% das instâncias são geradas de forma a pertencerem a um dos três agrupamentos previamente estabelecidos, enquanto os 20\% restantes correspondem a pontos gerados fora do intervalo definido para esses agrupamentos.As características dos dados sintéticos foram definidas com base em dados de 
+\textit{coordenadas geográficas}\footnote{Dados de coordenadas geográficas correspondem à representação da localização de objetos ou fenômenos na superfície terrestre por meio de um sistema de referência espacial, normalmente expresso pelas coordenadas de latitude e longitude \cite{ZNAS2015}.}
+
+A Figura \ref{fig:basedados} apresenta uma amostra dos dados gerados:
+
+%Figura exemplo de dados
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.2\textwidth]{exemplobase.png}
+    \caption{Exemplo da base de dados}
+    {\small Fonte: própria.}
+    \label{fig:basedados}
+\end{figure}
+Na primeira linha, o valor 100 indica que a base de dados contém cem pontos, enquanto o valor 2 representa a quantidade de dimensões consideradas. Neste trabalho, essas duas dimensões correspondem às coordenadas geográficas de latitude e longitude. Com base nos testes realizados, foram definidos cinco tamanhos para as bases de dados utilizadas nos experimentos: 100.000, 200.000, 300.000, 400.000 e 500.000 pontos. 
+
+
+\subsection{Codificação do Algoritmo K-Means} %ver o termo correto
+\label{sec:codificacaokmeans}
+
+Finalizadas as etapas de compreensão do algoritmo K-Means, bem como o estudo da métrica de distância clássica empregada por esse algoritmo e de métricas alternativas, e definida a base de dados utilizada no experimento, procedeu-se à implementação do algoritmo K-Means e de suas respectivas funções na Linguagem C.
+
+Destaca-se que a escolha da linguagem C ocorreu devido a fatores como sua maior proximidade com o hardware e sua sintaxe relativamente próxima ao pseudocódigo, características que favorecem a análise assintótica do algoritmo. Além disso, a documentação oficial da linguagem disponibiliza informações sobre a complexidade assintótica de determinadas operações e funções, contribuindo para uma avaliação mais precisa do desempenho computacional da implementação.
+
+
+A implementação foi desenvolvida na IDE Dev-C++ 5.11.  O código-fonte utilizado neste estudo está disponível no repositório GitHub\footnote{\url{https://github.com/edmaryokome/projeto_kmeans}},  no qual também podem ser acessados os demais arquivos produzidos e utilizados ao longo desta pesquisa.
+
+Métrica de software é qualquer tipo de medição que se refira a um sistema de software, processo ou documentação relacionada. Permite ao gestor acompanhar a eficácia do projeto \cite{VETORAZZO2018}. Com o objetivo de caracterizar estruturalmente a implementação do algoritmo K-Means, foi elaborada a Tabela~\ref{tab:metricas_implementacao} contendo métricas como quantidade de linhas de código, número de funções, estruturas de repetição, variáveis e uso de ponteiros. 
+
+%tabela métrica
+\begin{table}[htbp]
+\centering
+\caption{Métricas estruturais da implementação do algoritmo K-Means}
+\label{tab:metricas_implementacao}
+
+\begin{tabular}{|p{4cm}|p{5cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor aproximado} \\ \hline
+
+Linhas totais &
+$\sim 320$ \\ \hline
+
+Funções implementadas &
+5 (1 ativa + 4 alternativas comentadas) \\ \hline
+
+Função principal &
+1 \\ \hline
+
+Variáveis locais &
+$\sim 20$ \\ \hline
+
+Ponteiros &
+$\sim 8$ \\ \hline
+
+Estruturas \texttt{for} &
+$\sim 18$ \\ \hline
+
+Estruturas \texttt{if} &
+$\sim 8$ \\ \hline
+
+\texttt{malloc()} &
+4 blocos principais + alocações internas \\ \hline
+
+\texttt{free()} &
+Correspondente às alocações \\ \hline
+
+Arquivos manipulados &
+1 \\ \hline
+
+\end{tabular}
+
+\smallskip
+\footnotesize
+Fonte: Elaborado pelo autor.
+
+\end{table}
+
+%fim tabela métrica
+A Tabela~\ref{tab:metricas_implementacao} apresenta uma visão geral das características estruturais da implementação do algoritmo K-Means desenvolvida na linguagem C, permitindo identificar aspectos relacionados à organização do código e aos elementos utilizados durante o desenvolvimento. 
+
+\subsection{Análise Assintótica do Projeto}
+
+
+A compreensão dos conceitos associados ao comportamento assintótico de funções é fundamental para a avaliação da eficiência de algoritmos. Nesse contexto, o uso de notações assintóticas possibilita descrever o custo computacional requerido por um algoritmo durante a resolução de problemas com diferentes tamanhos de entrada.\cite{SERPA2021}
+Nesta etapa do estudo, foi utilizada a Notação Big O para analisar a complexidade da implementação do algoritmo K-Means. Para realizar essa análise, o programa foi dividido em etapas funcionais, permitindo o cálculo individual da complexidade de cada trecho e, posteriormente, a obtenção da complexidade total da implementação. A Tabela ~\ref{tab:complexidade_kmeans} apresenta o detalhamento da complexidade associada a cada uma das etapas do programa. 
+
+
+
+\begin{table}[H]
+\centering
+\caption{Resumo da implementação do algoritmo K-Means e análise de complexidade}
+\label{tab:complexidade_kmeans}
+
+\begin{tabularx}{\columnwidth}{|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Etapa da implementação} &
+\textbf{Big O} \\ \hline
+
+Definição das bibliotecas &
+$O(1)$ \\ \hline
+
+Declaração de variáveis &
+$O(1)$ \\ \hline
+
+Leitura do arquivo de entrada &
+$O(n)$ \\ \hline
+
+Alocação dinâmica de vetores e matrizes &
+$O(n)$ \\ \hline
+
+Inicialização das estruturas de dados &
+$O(n)$ \\ \hline
+
+Escolha aleatória dos centróides iniciais &
+$O(k\cdot d)$ \\ \hline
+
+Atribuição dos pontos aos clusters
+(cálculo das distâncias para todos os centróides) &
+$O(n\cdot k\cdot d)$ \\ \hline
+
+Recalcular centróides
+(média dos pontos agrupados) &
+$O(n\cdot d)$ \\ \hline
+
+Apresentação dos resultados &
+$O(n)$ \\ \hline
+
+Liberação de memória &
+$O(n)$ \\ \hline
+
+\end{tabularx}
+
+\smallskip
+\footnotesize
+Fonte: Elaborado pelo autor.
+
+\end{table}
+
+Conforme mencionado anteriormente, o foco deste trabalho consiste em analisar os impactos da substituição da Distância Euclidiana por métricas alternativas no algoritmo K-Means. Conforme ilustrado no pseudocódigo \ref{alg:kmeans}, essa substituição foi realizada por meio da alteração da implementação da função calcularDistancia, responsável pelo cálculo da proximidade entre os pontos e os centróides. Dessa forma, foram implementadas e avaliadas as métricas Euclidiana, Manhattan, Cosseno, Minkowski e Chebyshev. A Tabela ~\ref{tab:metricas_distancia} apresenta as equações utilizadas para cada métrica — adaptadas das definições apresentadas nos tópicos anteriores — bem como suas respectivas complexidades computacionais. A implementação desenvolvida e o detalhamento do cálculo da complexidade encontram-se disponíveis no GitHub\footnote{Disponível em: \url{https://github.com/edmaryokome/projeto_kmeans}. Acesso em: 22 maio 2026.}
+
+\begin{table}[H]
+\centering
+\caption{Equações das métricas de distância e suas respectivas complexidades}
+\label{tab:metricas_distancia}
+
+\begin{tabularx}{\columnwidth}
+{|>{\raggedright\arraybackslash}p{2.1cm}
+|>{\centering\arraybackslash}X
+|>{\centering\arraybackslash}p{1.6cm}|}
+\hline
+
+\textbf{Métrica} &
+\textbf{Equação} &
+\textbf{Custo Comp.}
+\tabularnewline
+\hline
+
+Euclidiana &
+$\sqrt{\sum_{i=1}^{d}(x_i-y_i)^2}$ &
+$O(d)$
+\tabularnewline
+\hline
+
+Manhattan &
+$\sum_{i=1}^{d}|x_i-y_i|$ &
+$O(d)$
+\tabularnewline
+\hline
+
+Cosseno &
+$1-\dfrac{x\cdot y}{\|x\|\|y\|}$ &
+$O(d)$
+\tabularnewline
+\hline
+
+Minkowski &
+$\left(\sum_{i=1}^{d}|x_i-y_i|^p\right)^{\frac{1}{p}}$ &
+$O(d)$
+\tabularnewline
+\hline
+
+Chebyshev &
+$\max_{i=1}^{d}(|x_i-y_i|)$ &
+$O(d)$
+\tabularnewline
+\hline
+
+\end{tabularx}
+
+\smallskip
+\footnotesize
+Fonte: Elaborado pelo autor.
+
+\end{table}
+
+
+
+\begin{equation}
+\label{eq:complexidade_kmeans}
+O(n \cdot k \cdot d \cdot i)
+\end{equation}
+
+Ao analisar a Tabela ~\ref{tab:metricas_distancia}, observou-se que, embora as métricas apresentem diferenças em suas operações matemáticas e no custo computacional associado à execução de cada cálculo, todas mantiveram complexidade assintótica linear em relação ao número de dimensões dos dados, representada por O(d). Com base nessa análise e considerando as etapas da implementação apresentadas na Tabela ~\ref{tab:complexidade_kmeans}, obteve-se a seguinte complexidade global: 
+
+
+
+Onde:
+
+\[
+\begin{aligned}
+n &\rightarrow \text{quantidade de pontos};\\
+k &\rightarrow \text{quantidade de clusters};\\
+d &\rightarrow \text{dimensão};\\
+i &\rightarrow \text{número de iterações}.
+\end{aligned}
+\]
+
+
+
+A análise de complexidade permitiu identificar que a substituição das métricas de distância não alterou a ordem assintótica global do algoritmo, mantendo comportamento assintótico de $O(i \cdot n \cdot k \cdot d)$. Diante disso, o próximo subtópico apresenta os experimentos realizados com cada métrica e os respectivos resultados obtidos.
+
+
+
+\subsection{Experimentos}
 
 %Tabela de tempo
 \begin{table*}[htbp]
@@ -481,9 +847,6 @@ Distância de Chebyshev
 %fim tabela de tempo
 
 
-
-
-Próxima tabela:
 
 %Tabela comparações
 
@@ -628,75 +991,10 @@ Distância de Chebyshev
 %fim tabela trocas
 
 
-\subsection{Subseção 1 - caso necessário}
-
-% formato de lista em bullet-points
-\begin{itemize}
-\item \textbf{Item1} Descrição.
-\item \textbf{Item2} Descrição.
-\end{itemize}
-
-% formato de figuras 
-\begin{figure}[htbp]
-\centering
-%\includegraphics[width=0.85\columnwidth]{arquivo}
-\caption{Legenda da imagem}
-\label{fig:label_da_imagem}
-\end{figure}
-
-
-
-\begin{equation}
-\text{C}(i) = i + 3 - \frac{1}{3} \sum_{k}^{10} 2k
-\end{equation}
-
-%Lista enumerada
-\begin{enumerate}
-    \item Item1;
-    \item Item2;
-    \item Item3;
-\end{enumerate}
-
-
-%pseudocódigo gera dados
-
-
-\begin{algorithm}[H]
-\caption{Geração de Dados}
-\begin{algorithmic}[1]
-
-\State Definir quantidade de pontos e dimensões
-\State Criar arquivo de saída
-\State Inicializar gerador aleatório
-
-\For{cada ponto}
-    
-    \If{probabilidade menor que 80\%}
-        \State Escolher um dos três clusters
-        \State Gerar ponto próximo ao cluster
-        \State Adicionar pequeno ruído
-    \Else
-        \State Gerar ponto aleatório
-    \EndIf
-    
-    \State Salvar ponto no arquivo
-    
-\EndFor
-
-\State Fechar arquivo
-
-\end{algorithmic}
-\end{algorithm}
-
-%fim pseudocódigo gera dados
-
-
 
 \section{Resultados}
 
 Resultados da pesquisa
-
-
 
 
 \section{Conclusão}
