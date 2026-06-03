@@ -18,6 +18,15 @@
 \usepackage{cuted}
 \usepackage{array}
 \usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{cuted}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
 
 \newcounter{quadro}
 
@@ -51,6 +60,8 @@
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.8}
 \renewcommand{\textfraction}{0.1}
+\renewcommand{\lstlistingname}{Código}
+
 
 \title{Estudo comparativo do cálculo de distância dos pontos no algoritmo K-means}
 
@@ -235,6 +246,7 @@ Resolvendo os cálculos:
 \end{align*}
 O valor 5 é a distância entre os pontos A e B. 
 
+Entre as vantagens da Distância Euclidiana, está a preservação da distância entre pares de objetos mesmo após a inclusão de novos elementos na análise, incluindo valores atípicos (outliers). Objetos posicionados em direções distintas podem ser alocados ao mesmo agrupamento quando apresentam distâncias equivalentes em relação ao centróide. Como desvantagem, apresenta sensibilidade às diferenças de escala entre as dimensões consideradas no cálculo. Dessa forma, atributos com amplitudes maiores podem exercer influência dominante sobre o valor da distância, reduzindo a contribuição relativa das demais variáveis e impactando negativamente os resultados do agrupamento\cite{VelezFalconi2020}.
 %Fim do subtópico da Distância Euclidiana
 
 
@@ -273,7 +285,11 @@ d = 7
 \] 
 
 Ao desenvolver a fórmula, é possível verificar que inicialmente são realizadas as subtrações entre: \(x_{2}\)  e \(x_{1}\)  e depois \(y_{2}\)  e \(y_{1}\) . Em seguida são calculados seus respectivos valores absolutos e, posteriormente, feito o somatório desses valores. 
+
+A vantagem da Distância de Manhattan, está no fato de que seu cálculo é realizado sem o uso de operações de elevação ao quadrado, o que reduz sua sensibilidade à presença de ruídos e valores extremos (outliers) nos dados. Entre as desvantagens, destaca-se a limitação no tratamento de conjuntos de dados com elevada dimensionalidade, uma vez que o aumento do número de atributos pode reduzir sua capacidade de representar adequadamente as diferenças entre os objetos, afetando a consistência dos agrupamentos obtidos. Além disso, essa métrica apresenta dependência em relação à orientação do sistema de coordenadas, o que significa que alterações na rotação dos eixos podem modificar os valores das distâncias calculadas\cite{VelezFalconi2020}. 
+
 %Fim do subtópico da Distância de Manhattan
+
 
 \subsection{Medida de Cosseno} %ver o termo correto
 \label{sec:cosseno}
@@ -343,6 +359,7 @@ d \approx 0.0005
 
 Assim o valor: 0.0005 é a diferença angular entre os pontos A e B, sendo utilizado como medida de similaridade para auxiliar na identificação do agrupamento ao qual o ponto analisado pertence.
 
+A vantagem dessa métrica está em produzir um indicador simples que pode ser empregado para distinguir textos semelhantes, ordená-los conforme o grau de similaridade ou utilizar os valores gerados como variável dependente em modelos de regressão. Entre as desvantagens, destaca-se o fato de que essa métrica não fornece informações sobre a magnitude das diferenças entre os objetos analisados, a medida apresenta invariância em relação à escala dos dados e ausência de invariância a deslocamentos\cite{VelezFalconi2020}.
 %Fim do subtópico da Medida de Cosseno
 
 \subsection{Distância de Minkowski} %ver o termo correto
@@ -381,6 +398,10 @@ d \approx 4,497
 \] 
 
 Ao analisar o desenvolvimento da fórmula, observa-se que a atribuição do valor r=3 resulta na utilização de potências cúbicas durante o cálculo da distância. Esse fator pode impactar diretamente o tempo de execução da métrica, uma vez que operações de potenciação tendem a demandar maior custo computacional em comparação com operações aritméticas mais simples.
+
+A distância de Minkowski apresenta como principal vantagem sua flexibilidade, permitindo adaptar a medida de distância conforme as características dos dados por meio do ajuste de seus parâmetros, além de apresentar bons resultados em conjuntos de dados numéricos com grupos bem definidos. Por outro lado, essa métrica possui limitações relacionadas à sensibilidade à escala dos atributos e à necessidade de definição adequada de seus parâmetros, fatores que podem influenciar diretamente o desempenho do algoritmo. Além disso, sua eficiência pode ser reduzida em conjuntos de dados com várias dimensões\cite{VelezFalconi2020}. 
+
+
 %Fim do subtópico da Medida de Minkwoski
 
 \subsection{Distância de Chebyshev} %ver o termo correto
@@ -426,6 +447,9 @@ d = 4
 \]
 
 A maior diferença obtida entre os pontos foi igual a 4. Dessa forma, esse valor é utilizado como medida da distância de Chebyshev entre os dois pontos analisados.
+
+
+Entre as vantagens da métrica, destaca-se o menor tempo necessário para o cálculo das distâncias entre os conjuntos de dados, favorecendo a eficiência na execução do algoritmo. Por outro lado, sua principal desvantagem está associada à proximidade entre os centros, situação que pode reduzir a capacidade de obtenção de soluções ótimas e impactar negativamente a qualidade dos resultados gerados\cite{VelezFalconi2020}.
 
 
 %Fim do subtópico da Medida de Chebyshev
@@ -557,7 +581,7 @@ Na fase de implementação do projeto, o primeiro aspecto considerado foi a defi
 
 
 Inicialmente, são definidos a quantidade de pontos e a dimensionalidade da base de dados. Em seguida, é criado um arquivo para armazenamento dos dados gerados e inicializado o mecanismo de geração aleatória. Do conjunto total de dados, 80\% das instâncias são geradas de forma a pertencerem a um dos três agrupamentos previamente estabelecidos, enquanto os 20\% restantes correspondem a pontos gerados fora do intervalo definido para esses agrupamentos.As características dos dados sintéticos foram definidas com base em dados de 
-\textit{coordenadas geográficas}\footnote{Dados de coordenadas geográficas correspondem à representação da localização de objetos ou fenômenos na superfície terrestre por meio de um sistema de referência espacial, normalmente expresso pelas coordenadas de latitude e longitude \cite{ZNAS2015}.}
+\textit{coordenadas geográficas}\footnote{Dados de coordenadas geográficas correspondem à representação da localização de objetos ou fenômenos na superfície terrestre por meio de um sistema de referência espacial, normalmente expresso pelas coordenadas de latitude e longitude \cite{Nedeljkovic2018}.}
 
 A Figura \ref{fig:basedados} apresenta uma amostra dos dados gerados:
 
@@ -590,7 +614,7 @@ Métrica de software é qualquer tipo de medição que se refira a um sistema de
 \caption{Métricas estruturais da implementação do algoritmo K-Means}
 \label{tab:metricas_implementacao}
 
-\begin{tabular}{|p{4cm}|p{5cm}|}
+\begin{tabular}{|p{3.2cm}|p{4.0cm}|}
 \hline
 \textbf{Métrica} & \textbf{Valor aproximado} \\ \hline
 
@@ -638,7 +662,7 @@ A Tabela~\ref{tab:metricas_implementacao} apresenta uma visão geral das caracte
 \subsection{Análise Assintótica do Projeto}
 
 
-A compreensão dos conceitos associados ao comportamento assintótico de funções é fundamental para a avaliação da eficiência de algoritmos. Nesse contexto, o uso de notações assintóticas possibilita descrever o custo computacional requerido por um algoritmo durante a resolução de problemas com diferentes tamanhos de entrada.\cite{SERPA2021}
+A compreensão dos conceitos associados ao comportamento assintótico de funções é fundamental para a avaliação da eficiência de algoritmos. Nesse contexto, o uso de notações assintóticas possibilita descrever o custo computacional requerido por um algoritmo durante a resolução de problemas com diferentes tamanhos de entrada.\cite{Serpa2021}
 Nesta etapa do estudo, foi utilizada a Notação Big O para analisar a complexidade da implementação do algoritmo K-Means. Para realizar essa análise, o programa foi dividido em etapas funcionais, permitindo o cálculo individual da complexidade de cada trecho e, posteriormente, a obtenção da complexidade total da implementação. A Tabela ~\ref{tab:complexidade_kmeans} apresenta o detalhamento da complexidade associada a cada uma das etapas do programa. 
 
 
@@ -751,15 +775,12 @@ Fonte: Elaborado pelo autor.
 \end{table}
 
 
+Ao analisar a Tabela ~\ref{tab:metricas_distancia}, observou-se que, embora as métricas apresentem diferenças em suas operações matemáticas e no custo computacional associado à execução de cada cálculo, todas mantiveram complexidade assintótica linear em relação ao número de dimensões dos dados, representada por O(d). Com base nessa análise e considerando as etapas da implementação apresentadas na Tabela ~\ref{tab:complexidade_kmeans}, obteve-se a seguinte complexidade global: 
 
 \begin{equation}
 \label{eq:complexidade_kmeans}
 O(n \cdot k \cdot d \cdot i)
 \end{equation}
-
-Ao analisar a Tabela ~\ref{tab:metricas_distancia}, observou-se que, embora as métricas apresentem diferenças em suas operações matemáticas e no custo computacional associado à execução de cada cálculo, todas mantiveram complexidade assintótica linear em relação ao número de dimensões dos dados, representada por O(d). Com base nessa análise e considerando as etapas da implementação apresentadas na Tabela ~\ref{tab:complexidade_kmeans}, obteve-se a seguinte complexidade global: 
-
-
 
 Onde:
 
@@ -780,8 +801,163 @@ A análise de complexidade permitiu identificar que a substituição das métric
 
 \subsection{Experimentos}
 
+Analisar algoritmo consiste em estimar os recursos computacionais necessários para sua execução. Entre esses recursos podem ser considerados memória, largura de banda de comunicação e consumo de energia; entretanto, o tempo de computação permanece como a métrica mais frequentemente utilizada. Em análises experimentais, esse custo temporal pode ser representado por medidas operacionais específicas, como número de comparações, trocas ou tempo total de execução \cite{Cormen2024}. 
+
+
+Realizar experimentos em algoritmos é fundamental para complementar resultados obtidos por meio de análise teóricas, como por exemplo, a análise assintótica, permitindo uma compreensão mais ampla do comportamento do algoritmo em cenários de execução. A análise assintótica fornece garantias importantes sobre crescimento de complexidade e limites teóricos, e frequentemente se apoia em modelos simplificados de computação que desconsideram fatores práticos, como hierarquia de memória, cache de memória, características do compilador e propriedades específicas das entradas de dados. Nesse contexto, a experimentação possibilita avaliar desempenho efetivo, validar hipóteses teóricas, identificar limitações dos modelos analíticos e apoiar o desenvolvimento de algoritmos mais eficientes. A análise experimental não substitui a teoria, mas amplia sua capacidade explicativa ao aproximar os resultados matemáticos das condições reais de aplicação computacional\cite{McGeoch2001}.
+
+Nesta etapa do trabalho, o primeiro aspecto considerado foi a infraestrutura computacional disponível para a execução dos experimentos. A definição do ambiente experimental é importante para garantir transparência, reprodutibilidade e adequada interpretação dos resultados obtidos. A Tabela ~\ref{tab:hardware_software} apresenta os recursos de hardware e software utilizados durante a realização dos experimentos.
+
+\begin{table}[H]
+\centering
+\caption{Configuração do ambiente experimental}
+\label{tab:hardware_software}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Componente} & \textbf{Especificação} \\ \hline
+
+\multicolumn{2}{|c|}{\textbf{Hardware}} \\ \hline
+
+Processador &
+Intel Celeron N4500 @ 1.10 GHz \\ \hline
+
+Armazenamento &
+116 GB \\ \hline
+
+Placa de vídeo &
+518 MB \\ \hline
+
+Memória RAM &
+4 GB \\ \hline
+
+\multicolumn{2}{|c|}{\textbf{Software}} \\ \hline
+
+Sistema Operacional &
+Windows 11 \\ \hline
+
+IDE &
+Dev-C++ 5.11 \\ \hline
+
+\end{tabular}
+
+\begin{flushleft}
+\footnotesize Fonte: Elaborado pelo autor.
+\end{flushleft}
+
+\end{table} 
+
+
+Os subtópicos \ref{subsec:tempoexecucao}, \ref{subsec:nComparacoes} e \ref{subsec:nTrocas} apresentam os experimentos realizados considerando as métricas de tempo de execução, número de comparações e número de trocas, sendo esta última definida, neste trabalho, como a quantidade de vezes em que os pontos foram realocados entre grupos. 
+
+
+\subsection{Tempo de Execução}
+\label{subsec:tempoexecucao}
+
+A avaliação do tempo de execução constitui uma das principais abordagens para a análise da eficiência de algoritmos, uma vez que um algoritmo eficiente deve não apenas produzir resultados corretos, mas também executá-los em tempo adequado, mesmo diante de diferentes volumes de dados\cite{CORMEN2013}.
+
+Nesta etapa do trabalho, foram feitos os seguintes ajustes no programa do algoritmo K-Means: foram inseridos duas linhas de códigos, apresentado no código~\ref{cod:tempo}:
+
+\begin{lstlisting}[
+language=C,
+caption={Inicialização das variáveis de tempo},
+label={cod:tempo},
+numbers=left,
+numbersep=5pt,
+frame=single,
+basicstyle=\ttfamily\small
+]
+tempoInicial = time(NULL);
+tempoInicial = clock();
+
+\end{lstlisting}
+
+Nesse trecho foi obtido o tempo atual do sistema, utilizado como referência para a medição do tempo de execução do algoritmo. Destaca-se que o objetivo foi calcular exclusivamente o tempo gasto nas etapas principais do K-Means, compreendendo o cálculo das distâncias entre os pontos e os centróides, a definição dos grupos e o reajuste dos centróides. Dessa forma, essas instruções foram posicionadas imediatamente antes do laço de repetição responsável pela execução dessas operações. Após o término do laço de repetição, foram inseridas as seguintes linhas de código:
+
+\begin{lstlisting}[
+language=C,
+caption={Captura do tempo final de execução},
+label={cod:tempo_final},
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+frame=single,
+basicstyle=\ttfamily\small
+]
+tempoFinal = time(NULL);
+tempoFinal = clock();
+
+\end{lstlisting}
+
+Para obter o tempo final em segundos, foi implementada a seguinte linha de código:
+\begin{lstlisting}[
+language=C,
+caption={Cálculo do tempo de execução},
+label={cod:tempo_execucao},
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+frame=single,
+basicstyle=\ttfamily\small
+]
+tempo_execucao = (double)(tempoFinal -
+tempoInicial) / CLOCKS_PER_SEC;
+
+\end{lstlisting}
+
+Com o objetivo de encontrar o tempo de execução em segundos. A tabela xx apresenta os experimentos com 100.000 pontos:
+
+\begin{strip}
+\centering
+
+\begin{table}[H]
+\centering
+\caption{Tempo de execução das métricas de distância}
+\label{tab:calcTempo}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{ccccc}
+\toprule
+
+Distância Euclidiana &
+Distância de Manhattan &
+Medida de Cosseno &
+Distância de Minkowski &
+Distância de Chebyshev \\
+
+\midrule
+
+00,572000 & 00,139000 & 00,291000 & 01,238000 & 00,137000 \\
+00,452000 & 00,099000 & 00,364000 & 00,767000 & 00,166000 \\
+00,427000 & 00,170000 & 00,298000 & 01,311000 & 00,172000 \\
+00,512000 & 00,088000 & 00,334000 & 00,879000 & 00,224000 \\
+00,448000 & 00,098000 & 00,353000 & 00,897000 & 00,124000 \\
+
+\rowcolor{gray!20}
+00,452000 & 00,099000 & 00,334000 & 00,897000 & 00,166000 \\
+
+\bottomrule
+\end{tabular}
+}
+
+\smallskip
+\footnotesize
+Fonte: Elaborado pelo autor.
+
+\end{table}
+
+\end{strip}
+
+A Tabela~\ref{tab:calcTempo} apresenta os tempos de execução obtidos para o algoritmo K-Means clássico e para as versões modificadas com as métricas de distância implementadas. Os valores da primeira à quinta linha correspondem às execuções individuais realizadas para cada métrica, enquanto a última linha (em cinza) apresenta a média dos resultados obtidos. Observa-se que os tempos registrados apresentaram baixa variação entre as execuções, indicando estabilidade experimental. Em razão dessa consistência dos resultados, optou-se pela realização de cinco execuções por métrica, considerando esse número suficiente para representar o comportamento do algoritmo no cenário avaliado. O mesmo experimento foi realizado para as demais bases de dados (200.000, 300.000, 400.000 e 500.000 registros). 
+
+A Tabela~\ref{tab:distancias} apresenta os tempos de execução obtidos com os experimentos realizados.
+
 %Tabela de tempo
-\begin{table*}[htbp]
+\begin{strip}
+
+\centering
+
+\begin{table}[H]
 \centering
 \caption{Tempo de execução dos algoritmos de distância}
 \label{tab:distancias}
@@ -798,7 +974,7 @@ A análise de complexidade permitiu identificar que a substituição das métric
 \hline
 
 Distância Euclidiana 
-& 0.474000 s 
+& 0.452000 s 
 & 2.657000 s 
 & 2.762000 s 
 & 4.195000 s 
@@ -806,7 +982,7 @@ Distância Euclidiana
 \hline
 
 Distância de Manhattan 
-& 0.188000 s 
+& 0.099000 s 
 & 0.315000 s 
 & 0.436000 s 
 & 0.651000 s 
@@ -814,7 +990,7 @@ Distância de Manhattan
 \hline
 
 Medida do Cosseno 
-& 0.521000 s 
+& 0.334000 s 
 & 0.674000 s 
 & 1.175000 s 
 & 1.417000 s 
@@ -822,7 +998,7 @@ Medida do Cosseno
 \hline
 
 Distância de Minkowski 
-& 1.577000 s 
+& 0.897000 s 
 & 4.776000 s 
 & 3.588000 s 
 & 7.506000 s 
@@ -830,7 +1006,7 @@ Distância de Minkowski
 \hline
 
 Distância de Chebyshev 
-& 0.148000 s 
+& 0.166000 s 
 & 0.263000 s 
 & 0.738000 s 
 & 0.911000 s 
@@ -839,158 +1015,270 @@ Distância de Chebyshev
 
 \end{tabular}
 
-
 \vspace{0.2cm}
 {\small Fonte: Elaborado pelo autor.}
 
-\end{table*}
+\end{table}
+
+\end{strip}
 %fim tabela de tempo
 
+Ao analisar os resultados, no geral seguiram os resultados previstos, onde de acordo com a base de dados maior, maior foi o tempo de execução, porém vale destacar alguns pontos levantados:
+\begin{itemize}
+
+\item As métricas de Manhattan e Chebyshev, por apresentarem cálculos matemáticos mais simples, obtiveram melhor tempo de execução.
+
+\item A Distância Euclidiana apresentou tempo médio de execução em relação às demais métricas. Entretanto, observou-se um valor atípico na execução com 200.000 pontos, em que o tempo de execução foi superior ao das demais métricas, com exceção da Distância de Minkowski. Uma possível hipótese para esse comportamento é que os dados gerados nessa quantidade de pontos tenham apresentado maior dispersão, provocando aumento no número de comparações e de iterações em relação às outras métricas.
+
+\item Na Distância de Minkowski, devido à utilização do parâmetro $r = 3$, o custo matemático das operações tornou-se maior, o que pode ter contribuído para tempos de execução superiores aos das demais métricas.
+
+\item Na Medida de Cosseno, observa-se um comportamento intermediário, com crescimento mais acentuado em bases de dados maiores, indicando maior sensibilidade em relação ao volume de dados.
+
+\end{itemize}
 
 
-%Tabela comparações
+\subsection{Número de Comparações}
+\label{subsec:nComparacoes}
 
-\begin{table*}[htbp]
+A contagem de comparações não representa o único critério para avaliar a eficiência de um algoritmo. Ainda assim, sua análise permanece relevante, pois o estudo teórico dessa métrica proporciona importantes compreensões acerca do comportamento de um algoritmo, além de contribuir para o desenvolvimento de técnicas de análise aplicáveis a outros problemas computacionais\cite{Knuth1998}.
+
+Para calcular o número de comparações, foi inserida uma linha de código, apresentado em Código \ref{cod:comparacoes}:
+
+\begin{lstlisting}[
+language=C,
+caption={Contagem de comparações e definição do grupo},
+label={cod:comparacoes},
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+frame=single,
+basicstyle=\ttfamily\small,
+captionpos=b
+]
+comparacoes++;
+if (dist < dist_min) {
+    dist_min = dist;
+    grupo = j;
+}
+\end{lstlisting}
+
+\begin{center}
+{\small Fonte: Elaborado pelo autor.}
+\end{center} 
+
+A contagem de comparações (linha 1) ocorre no momento em que a distância calculada entre um ponto e um centróide é comparada com a menor distância armazenada, permitindo identificar o centróide mais próximo.
+
+Nesta etapa seguiu o mesmo procedimento da medição do tempo, onde foram executadas cinco medições, calculado a média dos resultados e transcrito para a tabela o valor desse cálculo.  
+
+A Tabela~\ref{tab:comparacao_distancias} apresenta os números de comparações, obtidos com os experimentos realizados:
+
+% Tabela comparações
+
+% Tabela de operações
+
+\begin{strip}
 \centering
-\caption{Comparação das Medidas de Distância}
-\renewcommand{\arraystretch}{1.5}
 
-\begin{tabular}{|l|c|c|c|c|c|}
+\captionof{table}{Comparação das Medidas de Distância}
+\label{tab:comparacao_distancias}
+
+
+\vspace{0.2cm}
+
+\renewcommand{\arraystretch}{1.2}
+
+\begin{tabular}{|l|r|r|r|r|r|}
 \hline
 
-\diagbox{\textbf{Medida de Distância}}{\textbf{Quantidade de Pontos}} 
-& \textbf{100.000} 
-& \textbf{200.000} 
-& \textbf{300.000} 
-& \textbf{400.000} 
+\textbf{Medida de Distância}
+& \textbf{100.000}
+& \textbf{200.000}
+& \textbf{300.000}
+& \textbf{400.000}
 & \textbf{500.000} \\
-
 \hline
 
-Distância Euclidiana 
-& 129.606 
-& 248.718 
-& 324.802 
-& 422.861 
-& 622.146 \\
-
+Distância Euclidiana
+& 3.000.000
+& 18.000.000
+& 8.100.000
+& 20.400.000
+& 27.000.000 \\
 \hline
 
-Distância de Manhattan 
-& 148.033 
-& 253.224 
-& 420.444 
-& 546.363 
-& 736.598 \\
-
+Distância de Manhattan
+& 3.600.000
+& 4.200.000
+& 12.600.000
+& 20.400.000
+& 18.000.000 \\
 \hline
 
-Medida do Cosseno 
-& 132.791 
-& 278.611 
-& 325.896 
-& 556.506 
-& 698.874 \\
-
+Medida do Cosseno
+& 4.800.000
+& 7.800.000
+& 12.600.000
+& 18.000.000
+& 27.000.000 \\
 \hline
 
-Distância de Minkowski 
-& 128.325 
-& 213.503 
-& 374.523 
-& 418.191 
-& 847.726 \\
-
+Distância de Minkowski
+& 3.300.000
+& 8.400.000
+& 7.200.000
+& 14.400.000
+& 52.500.000 \\
 \hline
 
-Distância de Chebyshev 
-& 151.990 
-& 202.186 
-& 446.280 
-& 565.517 
-& 587.053 \\
-
+Distância de Chebyshev
+& 3.600.000
+& 4.800.000
+& 16.200.000
+& 19.200.000
+& 13.500.000 \\
 \hline
 
 \end{tabular}
 
-\label{tab:comparacao_distancias}
+\vspace{0.2cm}
+
+{\small Fonte: Elaborado pelo autor.}
+
+\end{strip}
+
+% fim da tabela
+
+% fim tabela comparações
+
+A análise dos resultados permite identificar algumas características relevantes relacionadas ao comportamento computacional de cada métrica. Entre as principais características, estão: 
+\begin{itemize}
+\item Observa-se, de forma geral, que o número de comparações tende a aumentar conforme cresce a quantidade de pontos das bases de dados, comportamento esperado em algoritmos de agrupamento como o K-Means.
+\item A Distância Euclidiana apresentou crescimento significativo na quantidade de comparações, especialmente nas bases com 200.000, 400.000 e 500.000 pontos, indicando maior quantidade de verificações durante o processo de agrupamento.
+\item A Distância de Manhattan apresentou comportamento relativamente mais estável em comparação às demais métricas, embora também tenha apresentado crescimento nas bases maiores.
+\item A Medida do Cosseno apresentou aumento progressivo no número de comparações, principalmente nas bases de 400.000 e 500.000 pontos, sugerindo maior sensibilidade ao aumento do volume de dados.
+\item A Distância de Minkowski apresentou o maior número de comparações na base com 500.000 pontos, alcançando 52.500.000 comparações. Esse comportamento pode estar relacionado ao maior custo computacional provocado pela utilização do parâmetro $r = 3$, além de possíveis impactos no número de iterações do algoritmo.
+\item A Distância de Chebyshev apresentou comportamento oscilatório, com aumento expressivo em algumas bases e redução em outras, indicando que a distribuição dos dados pode influenciar diretamente a quantidade de comparações realizadas.
+\item Os resultados demonstram que diferentes métricas de distância podem influenciar não apenas o tempo de execução do algoritmo, mas também a quantidade de comparações necessárias para a formação dos agrupamentos.
+\end{itemize}
+
+
+\subsection{Número de Trocas}
+\label{subsec:nTrocas}
+A análise da eficiência de algoritmos pode envolver a contagem do número de vezes que determinadas operações são executadas. Desta forma, este trabalho, além de usar o tempo de execução e do número de comparações, trabalha com a métrica do número de mudanças de agrupamento, para avaliar o algoritmo K-Means Clássico e Alterado \cite{Knuth1998}. 
+
+Para contar quantas vezes os pontos mudaram de agrupamentos, foram feitas as seguintes mudanças na implementação da implementação do Algoritmo K-Means: 
+
+\begin{lstlisting}[
+    language=C,
+    frame=single,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=5pt,
+    caption={Contagem de mudancas de agrupamento},
+    label={lst:trocas}
+]
+if (rotulo[i] != grupo) {
+    trocas++;
+    trocas_iter++;
+    rotulo[i] = grupo;
+}
+\end{lstlisting}
+
+\begin{center}
+{\small Fonte: Elaborado pelo autor.}
+\end{center}
+
+O Código \ref{lst:trocas} apresenta o mecanismo utilizado para contabilizar as mudanças de agrupamento. Sempre que um ponto é realocado para um grupo diferente daquele ao qual estava previamente associado, os contadores de trocas global e por iteração são incrementados. A variável trocas corresponde ao número de realocações de pontos entre grupos realizadas ao longo da execução do algoritmo.
+
+Foi acrescentado uma condicional, e inserido duas linhas de códigos (2 e 3), onde a linha 2 representa a variável que faz a contagem da quantidade de vezes que os pontos mudam de agrupamento. Na linha 3 contabiliza apenas as mudanças de agrupamento ocorridas na iteração atual. A linha 4 é usada para fazer a mudança de agrupamento e foi realocada para dentro do trecho da condicional. 
+
+A tabela~\ref{tab:operacoes} apresenta os resultados obtidos nesta etapa experimental (ressaltando que foi utilizado o mesmo processo de cinco execuções, cálculo da média e transcrição dos resultados). 
+
+\begin{strip}
+\centering
+
+\captionof{table}{Quantidade de operações realizadas pelas métricas de distância}
+\label{tab:operacoes}
 
 \vspace{0.2cm}
-{\small Fonte: \cite{Ferrari2016}.} 
 
-\end{table*}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
 
-%fim tabela comparações
+\diagbox{Medida de Distância}{Quantidade de Pontos}
+& \textbf{100.000}
+& \textbf{200.000}
+& \textbf{300.000}
+& \textbf{400.000}
+& \textbf{500.000} \\
 
+\hline
 
-%Tabela trocas
-\begin{table*}[htbp]
-   \centering
-   \caption{Quantidade de operações realizadas pelas métricas de distância}
-   \label{tab:operacoes}
+Distância Euclidiana
+& 129.606
+& 248.718
+& 324.802
+& 422.861
+& 622.146 \\
+\hline
 
-   \begin{tabular}{|l|c|c|c|c|c|}
-      \hline
+Distância de Manhattan
+& 148.033
+& 253.224
+& 420.444
+& 546.363
+& 736.598 \\
+\hline
 
-      \diagbox{Medida de Distância}{Quantidade de Pontos}
-      & \textbf{100.000}
-      & \textbf{200.000}
-      & \textbf{300.000}
-      & \textbf{400.000}
-      & \textbf{500.000} \\
-      
-      \hline
+Medida do Cosseno
+& 132.791
+& 278.611
+& 325.896
+& 556.506
+& 698.874 \\
+\hline
 
-      Distância Euclidiana 
-      & 129.606 
-      & 248.718 
-      & 324.802 
-      & 422.861 
-      & 622.146 \\
-      \hline
+Distância de Minkowski
+& 128.325
+& 213.503
+& 374.523
+& 418.191
+& 847.726 \\
+\hline
 
-      Distância de Manhattan 
-      & 148.033 
-      & 253.224 
-      & 420.444 
-      & 546.363 
-      & 736.598 \\
-      \hline
+Distância de Chebyshev
+& 151.990
+& 202.186
+& 446.280
+& 565.517
+& 587.053 \\
+\hline
 
-      Medida do Cosseno 
-      & 132.791 
-      & 278.611 
-      & 325.896 
-      & 556.506 
-      & 698.874 \\
-      \hline
+\end{tabular}
 
-      Distância de Minkowski 
-      & 128.325 
-      & 213.503 
-      & 374.523 
-      & 418.191 
-      & 847.726 \\
-      \hline
+\vspace{0.2cm}
 
-      Distância de Chebyshev 
-      & 151.990 
-      & 202.186 
-      & 446.280 
-      & 565.517 
-      & 587.053 \\
-      \hline
+{\small Fonte: Elaborado pelo autor.}
 
-   \end{tabular}
-
-   \vspace{0.2cm}
-   {\small Fonte: Elaborado pelo autor.}
-
-\end{table*}
-%fim tabela trocas
+\end{strip}
 
 
+Ao analisar a Tabela~\ref{tab:operacoes},  observa-se que o número de operações tende a aumentar à medida que a quantidade de pontos aumenta, comportamento esperado. Entretanto, esse crescimento não ocorre de maneira uniforme entre as métricas avaliadas, indicando que a escolha da medida de distância influencia diretamente o comportamento do algoritmo. Entre os comportamentos levantados estão:
+
+\begin{itemize}
+
+\item A Distância Euclidiana apresentou, na maioria dos cenários, uma das menores quantidades de operações realizadas.
+
+\item A Distância de Minkowski obteve os menores valores para conjuntos com 100.000 e 200.000 pontos. Entretanto, apresentou um crescimento expressivo na quantidade de operações para volumes maiores de dados.
+
+\item A Medida do Cosseno apresentou comportamento intermediário, mantendo valores próximos aos da Distância Euclidiana para conjuntos menores, mas aumentando significativamente para conjuntos maiores.
+
+\item A Distância de Manhattan demonstrou comportamento relativamente previsível, com crescimento estável à medida que a quantidade de pontos aumentou. A partir de 300.000 pontos, passou a figurar entre as métricas com maior quantidade de operações realizadas.
+
+\item A Distância de Chebyshev apresentou oscilações consideráveis entre os diferentes tamanhos de entrada, sugerindo maior sensibilidade à distribuição dos dados e ao processo de agrupamento.
+
+\end{itemize}
 
 \section{Resultados}
 
