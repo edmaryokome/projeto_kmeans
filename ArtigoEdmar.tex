@@ -132,14 +132,14 @@ Agrupamento é o nome dado ao processo de separar (particionar ou segmentar) um 
 
 No agrupamento, os objetos são agrupados com o objetivo de maximizar a distância interclasse e minimizar a distância intraclasse, ou seja, maximizar a similaridade intraclasse e minimizar a similaridade interclasse. Portanto, um cluster pode ser definido como uma coleção de objetos similares uns aos outros e dissimilares aos objetos pertencentes a outros grupos. \cite{Ferrari2016}
 
-Entre os principais algoritmos de agrupamento destacam-se: o k-means e o k-medoids, bem como suas variações. Além desses, os métodos hierárquicos, especialmente single-link e complete-link, também apresentam ampla aplicação em tarefas de clusterização. Outros modelos relevantes incluem algoritmos baseados em densidade, como o DBSCAN, abordagens fundamentadas em grafos, como o MST, e técnicas de particionamento não exclusivo, a exemplo do fuzzy k-means. \cite{Ferrari2016} Este trabalho tem como foco o algoritmo K-Means. Dessa forma, para uma melhor compreensão do seu funcionamento, considere a Figura \ref{fig:semgrupo}:
+Entre os principais algoritmos de agrupamento destacam-se: o k-means e o k-medoids, bem como suas variações. Além desses, os métodos hierárquicos, especialmente single-link e complete-link, também apresentam ampla aplicação em tarefas de clusterização. Outros modelos relevantes incluem algoritmos baseados em densidade, como o DBSCAN, abordagens fundamentadas em grafos, como o MST, e técnicas de particionamento não exclusivo, a exemplo do fuzzy k-means. \cite{Ferrari2016} Este trabalho tem como foco o algoritmo K-Means. Dessa forma, para uma melhor compreensão do seu funcionamento, considere a Figura~\ref{fig:semGrupo}:
 
 \begin{figure}[H]
     \centering
-     \includegraphics[width=0.4\textwidth]{ponto.png}
-    \caption{Dados no plano cartesiano}
-    {\small Fonte: própria.}
-    \label{fig:semgrupo}
+     \includegraphics[width=0.4\textwidth]{ponto.png} 
+    \caption{\small Dados no plano cartesiano}
+    {\small Fonte: Elaborado pelo autor.}
+    \label{fig:semGrupo}  
 \end{figure}
 
 Deseja-se agrupar os pontos distribuídos no plano cartesiano considerando três grupos distintos. Inicialmente, são definidos aleatoriamente três centróides, que representam os centros dos agrupamentos. Em seguida, para cada ponto do plano cartesiano, calcula-se a distância em relação a cada centróide. Cada ponto é então associado ao grupo cujo centróide apresenta a menor distância. Após a etapa de agrupamento de todos os pontos, os centróides são recalculados com base nos elementos pertencentes a cada grupo, e o processo de cálculo das distâncias é executado novamente. O algoritmo encerra sua execução quando os centróides deixam de se movimentar ou quando é atingido o número máximo de iterações previamente estabelecido. A Figura \ref{fig:comgrupo} apresentam os pontos agrupados:
@@ -147,8 +147,8 @@ Deseja-se agrupar os pontos distribuídos no plano cartesiano considerando três
 \begin{figure}[H]
     \centering
      \includegraphics[width=0.4\textwidth]{agrupado.png}
-    \caption{Dados no plano cartesiano agrupados}
-    {\small Fonte: própria.}
+    \caption{\small Dados no plano cartesiano agrupados}
+    {\small Fonte: Elaborado pelo autor.}
     \label{fig:comgrupo}
 \end{figure}
 
@@ -576,6 +576,8 @@ Na fase de implementação do projeto, o primeiro aspecto considerado foi a defi
 \State Fechar arquivo
 
 \end{algorithmic}
+\vspace{2pt} % Adiciona um pequeno espaço
+{\small Fonte: Elaborado pelo autor.}
 \end{algorithm}
 %fim pseudocódigo gera dados
 
@@ -590,7 +592,7 @@ A Figura \ref{fig:basedados} apresenta uma amostra dos dados gerados:
     \centering
      \includegraphics[width=0.2\textwidth]{exemplobase.png}
     \caption{Exemplo da base de dados}
-    {\small Fonte: própria.}
+    {\small Fonte: Elaborado pelo autor.}
     \label{fig:basedados}
 \end{figure}
 Na primeira linha, o valor 100 indica que a base de dados contém cem pontos, enquanto o valor 2 representa a quantidade de dimensões consideradas. Neste trabalho, essas duas dimensões correspondem às coordenadas geográficas de latitude e longitude. Com base nos testes realizados, foram definidos cinco tamanhos para as bases de dados utilizadas nos experimentos: 100.000, 200.000, 300.000, 400.000 e 500.000 pontos. 
@@ -905,7 +907,7 @@ tempoInicial) / CLOCKS_PER_SEC;
 
 \end{lstlisting}
 
-Com o objetivo de encontrar o tempo de execução em segundos. A tabela xx apresenta os experimentos com 100.000 pontos:
+Com o objetivo de encontrar o tempo de execução em segundos. A tabela~\ref{tab:calcTempo} apresenta os experimentos com 100.000 pontos:
 
 \begin{strip}
 \centering
@@ -916,9 +918,9 @@ Com o objetivo de encontrar o tempo de execução em segundos. A tabela xx apres
 \label{tab:calcTempo}
 
 \resizebox{\textwidth}{!}{
-\begin{tabular}{ccccc}
+\begin{tabular}{cccccc}
 \toprule
-
+Linha &
 Distância Euclidiana &
 Distância de Manhattan &
 Medida de Cosseno &
@@ -927,14 +929,14 @@ Distância de Chebyshev \\
 
 \midrule
 
-00,572000 & 00,139000 & 00,291000 & 01,238000 & 00,137000 \\
-00,452000 & 00,099000 & 00,364000 & 00,767000 & 00,166000 \\
-00,427000 & 00,170000 & 00,298000 & 01,311000 & 00,172000 \\
-00,512000 & 00,088000 & 00,334000 & 00,879000 & 00,224000 \\
-00,448000 & 00,098000 & 00,353000 & 00,897000 & 00,124000 \\
+1 & 00,572000 & 00,139000 & 00,291000 & 01,238000 & 00,137000 \\
+2 & 00,452000 & 00,099000 & 00,364000 & 00,767000 & 00,166000 \\
+3 & 00,427000 & 00,170000 & 00,298000 & 01,311000 & 00,172000 \\
+4 & 00,512000 & 00,088000 & 00,334000 & 00,879000 & 00,224000 \\
+5 & 00,448000 & 00,098000 & 00,353000 & 00,897000 & 00,124000 \\
 
 \rowcolor{gray!20}
-00,452000 & 00,099000 & 00,334000 & 00,897000 & 00,166000 \\
+6 & 00,452000 & 00,099000 & 00,334000 & 00,897000 & 00,166000 \\
 
 \bottomrule
 \end{tabular}
@@ -948,7 +950,7 @@ Fonte: Elaborado pelo autor.
 
 \end{strip}
 
-A Tabela~\ref{tab:calcTempo} apresenta os tempos de execução obtidos para o algoritmo K-Means clássico e para as versões modificadas com as métricas de distância implementadas. Os valores da primeira à quinta linha correspondem às execuções individuais realizadas para cada métrica, enquanto a última linha (em cinza) apresenta a média dos resultados obtidos. Observa-se que os tempos registrados apresentaram baixa variação entre as execuções, indicando estabilidade experimental. Em razão dessa consistência dos resultados, optou-se pela realização de cinco execuções por métrica, considerando esse número suficiente para representar o comportamento do algoritmo no cenário avaliado. O mesmo experimento foi realizado para as demais bases de dados (200.000, 300.000, 400.000 e 500.000 registros). 
+A Tabela~\ref{tab:calcTempo} apresenta os tempos de execução obtidos para o algoritmo K-Means clássico e para as versões modificadas com as métricas de distância implementadas. Os valores da primeira à quinta linha correspondem às execuções individuais realizadas para cada métrica, enquanto a linha 6 (em cinza) apresenta a média dos resultados obtidos. Observa-se que os tempos registrados apresentaram baixa variação entre as execuções, indicando estabilidade experimental. Em razão dessa consistência dos resultados, optou-se pela realização de cinco execuções por métrica, considerando esse número suficiente para representar o comportamento do algoritmo no cenário avaliado. O mesmo experimento foi realizado para as demais bases de dados (200.000, 300.000, 400.000 e 500.000 registros). 
 
 A Tabela~\ref{tab:distancias} apresenta os tempos de execução obtidos com os experimentos realizados.
 
@@ -1282,14 +1284,128 @@ Ao analisar a Tabela~\ref{tab:operacoes},  observa-se que o número de operaçõ
 
 \section{Resultados}
 
-Resultados da pesquisa
+%Resultados da pesquisa
+O desenvolvimento deste trabalho teve os seguintes resultados:
+
+\begin{itemize}
+    \item Implementação, em Linguagem C, do algoritmo K-Means nas versões clássica e modificada;
+    
+    \item Cálculo da complexidade computacional utilizando a notação Big O;
+    
+    \item Implementação de scripts em Python para geração dos gráficos utilizados na análise dos resultados;
+    
+    \item Implementação de um programa em Linguagem C para a geração das bases de dados utilizadas nos experimentos;
+    
+    \item Execução dos experimentos utilizando as bases de dados geradas, cujos resultados são apresentados nas figuras:~\ref{fig:grafTempo}, ~\ref{fig:grafComparacao} e ~\ref{fig:grafMudanca} , em forma de gráficos.
+\end{itemize}
+
+A partir dos dados da Tabela~\ref{tab:distancias}, foi elaborado o gráfico de tempo de execução apresentado na Figura \ref{fig:grafTempo}:
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.4\textwidth]{tempo.png}
+    \caption{Gráfico de Tempo de Execução}
+    {\small Fonte: própria.}
+    \label{fig:grafTempo}
+\end{figure}
+
+Ao análisar o gráfico é possível destacar fazer as seguintes considerações: 
+
+\begin{itemize}
+
+\item \textbf{Distância de Manhattan}: apresentou os menores tempos de execução em praticamente todos os cenários avaliados, demonstrando elevada eficiência computacional. Esse comportamento pode ser atribuído à simplicidade de suas operações matemáticas, que utilizam apenas somas e valores absolutos.
+
+\item \textbf{Distância de Chebyshev}: também apresentou baixo tempo de execução e comportamento estável ao longo dos experimentos, mantendo desempenho semelhante ao da Distância de Manhattan.
+
+\item \textbf{Distância Euclidiana}: apresentou tempos intermediários de execução. Embora tenha mantido crescimento relativamente controlado, observou-se um aumento expressivo entre as bases de 100.000 e 200.000 pontos, seguido por crescimento mais gradual nas bases seguintes.
+
+\item \textbf{Medida do Cosseno}: apresentou desempenho intermediário nas menores bases de dados, porém seu tempo de execução cresceu progressivamente com o aumento do volume de dados, atingindo valores significativamente maiores na base com 500.000 pontos.
+
+\item \textbf{A Distância de Minkowski} apresentou os maiores tempos de execução em todos os cenários analisados, evidenciando ser a métrica computacionalmente mais custosa entre as avaliadas. Observa-se que a Distância de Minkowski apresentou crescimento acentuado principalmente na base de 500.000 pontos, indicando maior sensibilidade ao aumento da quantidade de dados processados. O comportamento dessa métrica sugere que a utilização do parâmetro $r=3$ aumenta o custo das operações matemáticas devido ao cálculo de potências e raízes, refletindo diretamente no tempo de execução.
+
+\end{itemize}
+
+A Figura~\ref{fig:grafComparacao} apresenta o gráfico do número de comparações obtido a partir dos dados da Tabela~\ref{tab:comparacao_distancias}.
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.5\textwidth]{comparacao.png}
+    \caption{Gráfico de Número de Comparações}
+    {\small Fonte: própria.}
+    \label{fig:grafComparacao}
+\end{figure}
+
+De maneira geral, observa-se que conforme aumenta o volume de dados resulta no crescimento da quantidade de comparações para todas as métricas, embora o crescimento ocorra de forma distinta. Entre as características levantadas estão:
+
+\begin{itemize}
+    \item \textbf{Distância Euclidiana}: apresentou comportamento oscilante, atingindo aproximadamente 27 milhões de comparações para 500.000 pontos.
+
+    \item \textbf{Distância Manhattan}: exibiu crescimento gradual e estável, alcançando cerca de 18 milhões de comparações no maior conjunto analisado.
+
+    \item \textbf{A Medida do Cosseno}: apresentou crescimento contínuo, registrando uma das maiores quantidades de comparações para 500.000 pontos.
+
+    \item \textbf{Distância Chebyshev}: apresentou crescimento acentuado até 400.000 pontos, seguido de redução para 500.000 pontos, indicando possível estabilização do processo de agrupamento.
+
+    \item \textbf{Distância de Minkowski}: destacou-se pelo crescimento abrupto no maior volume de dados, alcançando aproximadamente 52 milhões de comparações, valor significativamente superior ao das demais métricas.
+\end{itemize}
+
+A Figura~\ref{fig:grafMudanca} apresenta o gráfico do número de mudança de agrupamento dos pontos, gerado a partir dos dados da tabela~\ref{tab:operacoes}.
+
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.5\textwidth]{mudGrupo.png}
+    \caption{Gráfico de Mudança de Agrupamento}
+    {\small Fonte: própria.}
+    \label{fig:grafMudanca}
+\end{figure}
+
+
+De modo geral, observa-se que o aumento da quantidade de dados provoca crescimento no número de mudanças de agrupamento para todas as métricas analisadas, indicando maior esforço do algoritmo para alcançar a convergência em conjuntos maiores. Entre as principais características levantadas estão:
+
+\begin{itemize}
+    \item \textbf{Distância Euclidiana}: apresentou crescimento gradual ao longo dos experimentos. Entre 300.000 e 400.000 pontos houve um aumento moderado, seguido de crescimento mais acentuado para 500.000 pontos. Finalizou com aproximadamente 620 mil mudanças, mantendo um comportamento relativamente estável quando comparada às demais métricas.
+
+    \item \textbf{Distância Manhattan}: demonstrou crescimento contínuo e consistente em praticamente todos os cenários. Destacou-se por apresentar uma das maiores quantidades de mudanças para 500.000 pontos, atingindo aproximadamente 740 mil mudanças. Esse comportamento sugere maior quantidade de realocações de pontos durante o processo de convergência.
+
+    \item \textbf{Medida do Cosseno}: apresentou crescimento expressivo entre 100.000 e 200.000 pontos. Houve certa estabilização entre 200.000 e 300.000 pontos, seguida de forte aumento para volumes superiores. Alcançou aproximadamente 700 mil mudanças para 500.000 pontos.
+
+    \item \textbf{Distância Chebyshev}: registrou crescimento acentuado até 400.000 pontos, chegando a aproximadamente 570 mil mudanças. Diferentemente das demais métricas, apresentou pequena estabilização entre 400.000 e 500.000 pontos, indicando possível redução da necessidade de realocação de pontos em conjuntos maiores.
+
+    \item \textbf{Distância de Minkowski}: foi a métrica que apresentou o comportamento mais expressivo. Manteve valores próximos às demais métricas até 400.000 pontos. Entre 400.000 e 500.000 pontos ocorreu um aumento abrupto, atingindo aproximadamente 850 mil mudanças, o maior valor observado em todo o experimento. Esse resultado sugere que essa métrica exigiu uma quantidade significativamente maior de realocações para estabilizar os agrupamentos.
+\end{itemize}
 
 
 \section{Conclusão}
 
-Retomada da proposta, resultados e possíveis melhorias/trabalhos futuros.
+%Retomada da proposta, resultados e possíveis melhorias/trabalhos futuros.
 
-%testo teste
+O desenvolvimento deste trabalho possibilitou um estudo do algoritmo K-Means, com foco na etapa de cálculo das distâncias entre os pontos e nos conceitos sobre análise de algoritmos. A substituição da Distância Euclidiana por outras métricas, como Manhattan, Minkowski, Chebyshev e Cosseno, permitiu analisar os impactos dessas medidas no desempenho computacional do algoritmo. Os resultados obtidos demonstraram que a escolha da métrica de distância influencia diretamente o comportamento do K-Means, refletindo no tempo de execução, no número de comparações e na quantidade de mudanças de agrupamento realizadas durante o processo de convergência.
+
+De modo geral, as métricas baseadas em operações matemáticas mais simples, como Manhattan e Chebyshev, apresentaram melhor desempenho computacional, caracterizado por menor custo operacional e maior estabilidade dos resultados. Em contrapartida, as métricas do Cosseno e, principalmente, de Minkowski demandaram maior esforço computacional. A Distância de Minkowski apresentou crescimento expressivo do custo computacional à medida que o volume de dados aumentou, comportamento que pode ser atribuído ao valor do parâmetro utilizado em sua formulação. Como essa métrica representa uma generalização das distâncias Manhattan e Euclidiana, a utilização de valores iguais a 1 ou 2 produziria resultados equivalentes a essas métricas. 
+
+Os resultados também evidenciaram que a escolha da métrica de distância exerce influência significativa sobre o processo de convergência do algoritmo, uma vez que diferentes medidas conduzem a distintas distribuições dos pontos nos agrupamentos e, consequentemente, a diferentes quantidades de operações realizadas durante a execução.
+
+Por fim, destaca-se que o objetivo deste trabalho não foi propor modificações estruturais no algoritmo K-Means, mas investigar os impactos decorrentes da substituição da métrica utilizada no cálculo das distâncias. A literatura especializada demonstra que o K-Means clássico está fortemente associado à Distância Euclidiana devido à sua simplicidade matemática, baixo custo computacional, compatibilidade com o cálculo de centróides por meio da média aritmética e facilidade de convergência. Entretanto, tanto a literatura quanto os trabalhos identificados no estado da arte apresentam variações do algoritmo que exploram diferentes métricas de distância, evidenciando que a escolha da medida mais adequada depende das características dos dados e dos objetivos da aplicação.
+
+\subsection{Trabalhos Futuros}
+
+Como trabalhos futuros, sugere-se a ampliação deste estudo por meio da investigação de novas abordagens de implementação e da realização de experimentos adicionais, visando aprofundar a compreensão dos impactos das métricas de distância no desempenho do algoritmo K-Means. Nesse contexto, destacam-se as seguintes possibilidades de pesquisa:
+
+\begin{itemize}
+\item Reestruturar a implementação do algoritmo utilizando operações matriciais, com o objetivo de avaliar os impactos dessa abordagem no desempenho computacional e no consumo de recursos;
+
+\item Realizar experimentos com bases de dados de maior dimensionalidade, considerando espaços tridimensionais e quadridimensionais, a fim de analisar o comportamento das métricas de distância em cenários mais complexos;
+
+\item Investigar a utilização de outras métricas de distância, comparando seus impactos sobre o tempo de execução, número de comparações e mudanças de agrupamento;
+
+\item Implementar versões paralelas do algoritmo utilizando tecnologias de processamento em GPU, como CUDA, e comparar os resultados obtidos com a implementação sequencial desenvolvida neste trabalho;
+
+\item Avaliar o comportamento das métricas de distância em bases de dados reais, permitindo verificar se os resultados observados em dados sintéticos se mantêm em aplicações práticas;
+
+\item Investigar o impacto da variação do número de agrupamentos ($k$) sobre o desempenho computacional e a qualidade dos agrupamentos gerados.
+
+\end{itemize}
 
 
 % a bibliografia deve estar no arquivo references.bib em formato bibtex
