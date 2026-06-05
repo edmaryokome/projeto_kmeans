@@ -719,7 +719,35 @@ Fonte: Elaborado pelo autor.
 
 \end{table}
 
-Conforme mencionado anteriormente, o foco deste trabalho consiste em analisar os impactos da substituição da Distância Euclidiana por métricas alternativas no algoritmo K-Means. Conforme ilustrado no pseudocódigo \ref{alg:kmeans}, essa substituição foi realizada por meio da alteração da implementação da função calcularDistancia, responsável pelo cálculo da proximidade entre os pontos e os centróides. Dessa forma, foram implementadas e avaliadas as métricas Euclidiana, Manhattan, Cosseno, Minkowski e Chebyshev. A Tabela ~\ref{tab:metricas_distancia} apresenta as equações utilizadas para cada métrica — adaptadas das definições apresentadas nos tópicos anteriores — bem como suas respectivas complexidades computacionais. A implementação desenvolvida e o detalhamento do cálculo da complexidade encontram-se disponíveis no GitHub\footnote{Disponível em: \url{https://github.com/edmaryokome/projeto_kmeans}. Acesso em: 22 maio 2026.}
+Conforme mencionado anteriormente, o foco deste trabalho consiste em analisar os impactos da substituição da Distância Euclidiana por métricas alternativas no algoritmo K-Means. A partir do pseudocódigo \ref{alg:kmeans}, essa substituição foi realizada por meio da alteração da implementação da função calcularDistancia(), responsável pelo cálculo da proximidade entre os pontos e os centróides. O pseudocódigo \ref{alg:distancia_generica}, apresenta a estrutura desta função:
+
+\begin{algorithm}[H]
+\floatname{algorithm}{Pseudocódigo}
+\caption{calcularDistancia()}
+\label{alg:distancia_generica}
+\begin{algorithmic}[1]
+
+\Require pontos $A$, $B$, dimensão $d$ e métrica $M$
+\Ensure Distância entre os pontos
+
+\State Inicializar variáveis
+
+\For{$i \gets 0$ até $d-1$}
+    \State Aplicar a métrica $M$
+    \State Atribuir resultados para variável
+\EndFor
+
+\State \Return resultado
+
+\end{algorithmic}
+\end{algorithm} 
+
+Na linha 3 poderá implementar uma das cinco métricas: Euclidiana, Manhattan, Cosseno, Minkowski ou Chebyshev. 
+
+O funcionamento da função pode ser descrita da seguinte forma: inicialmente, são recebidos os pontos (A) e (B), em que (A) representa o centróide e (B) o ponto a ser associado a um agrupamento. São informados a dimensão dos dados e a métrica de distância a ser utilizada. Inicializa as variáveis auxiliares necessárias. Em seguida, é executado o laço de repetição que percorre todas as dimensões dos vetores. Durante cada iteração, são realizadas as operações específicas da métrica escolhida, acumulando os resultados. Após o término do laço, o valor obtido é retornado como resultado.
+
+
+A Tabela ~\ref{tab:metricas_distancia} apresenta as equações utilizadas para cada métrica (que pode ser substituída na linha 3 do pseudocódigo \ref{alg:distancia_generica}) — adaptadas das definições apresentadas nos tópicos anteriores — bem como suas respectivas complexidades computacionais. A implementação desenvolvida e o detalhamento do cálculo da complexidade encontram-se disponíveis no GitHub.
 
 \begin{table}[H]
 \centering
@@ -794,7 +822,6 @@ d &\rightarrow \text{dimensão};\\
 i &\rightarrow \text{número de iterações}.
 \end{aligned}
 \]
-
 
 
 A análise de complexidade permitiu identificar que a substituição das métricas de distância não alterou a ordem assintótica global do algoritmo, mantendo comportamento assintótico de $O(i \cdot n \cdot k \cdot d)$. Diante disso, o próximo subtópico apresenta os experimentos realizados com cada métrica e os respectivos resultados obtidos.
