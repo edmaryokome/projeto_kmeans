@@ -131,11 +131,12 @@ A principal contribuição deste trabalho consiste na análise comparativa dos i
 Este artigo está estruturado em cinco seções. A Seção 2 apresenta a fundamentação teórica relacionada ao tema; a Seção 3 descreve os materiais e métodos; a Seção 4 discute os resultados obtidos; e a Seção 5 apresenta as conclusões e propostas futuras.
  
 \section{Fundamentação Teórica}
-Agrupamento é o nome dado ao processo de separar (particionar ou segmentar) um conjunto de objetos em grupos.O agrupamento de dados considera dados de entrada não rotulados, ou seja, o grupo (classe) ao qual cada dado de entrada (objeto) pertence não é conhecido a priori. Como os rótulos das classes dos dados de treinamento não são conhecidos a priori, esse processo é denominado treinamento não supervisionado (ou aprendizagem não supervisionada). \cite{Ferrari2016}
+
+Agrupamento é o processo de separar, particionar ou segmentar um conjunto de dados em grupos. Nesta abordagem, os dados de entrada não possuem rótulos previamente definidos, de modo que o grupo ao qual cada dado pertence é desconhecido antes da execução do algoritmo. Por essa razão, o agrupamento é classificado como uma técnica de aprendizagem não supervisionada, cuja finalidade é identificar padrões e estruturas presentes nos dados sem o auxílio de informações previamente definidas \cite{Ferrari2016}. 
 
 No agrupamento, os objetos são agrupados com o objetivo de maximizar a distância interclasse e minimizar a distância intraclasse, ou seja, maximizar a similaridade intraclasse e minimizar a similaridade interclasse. Portanto, um cluster pode ser definido como uma coleção de objetos similares uns aos outros e dissimilares aos objetos pertencentes a outros grupos. \cite{Ferrari2016}
 
-Entre os principais algoritmos de agrupamento destacam-se: o k-means e o k-medoids, bem como suas variações. Além desses, os métodos hierárquicos, especialmente single-link e complete-link, também apresentam ampla aplicação em tarefas de clusterização. Outros modelos relevantes incluem algoritmos baseados em densidade, como o DBSCAN, abordagens fundamentadas em grafos, como o MST, e técnicas de particionamento não exclusivo, a exemplo do fuzzy k-means. \cite{Ferrari2016} Este trabalho tem como foco o algoritmo K-Means. Dessa forma, para uma melhor compreensão do seu funcionamento, considere a Figura~\ref{fig:semGrupo}:
+Entre os principais algoritmos de agrupamento estão: o k-Means e o k-Medoids e suas variações. Além desses, os métodos hierárquicos também apresentam ampla aplicação em tarefas de clusterização. Outros modelos relevantes incluem algoritmos baseados em densidade, como o DBSCAN, abordagens fundamentadas em grafos, como o MST, e técnicas de particionamento não exclusivo, a exemplo do Fuzzy k-Means. \cite{Ferrari2016} Dentre os algoritmos apresentados, este trabalho tem como foco o algoritmo K-Means. Para compreender seu funcionamento, a Figura~\ref{fig:semGrupo} apresenta um conjunto de dados não agrupados.
 
 \begin{figure}[H]
     \centering
@@ -199,18 +200,16 @@ O algoritmo K-Means é representado no pseudocódigo \ref{alg:kmeans}:
 
 Inicialmente, são definidos o número desejado de agrupamentos, a base de dados a ser processada e o número máximo de iterações do algoritmo. Como resultado, obtêm-se os dados agrupados e os centróides estabilizados. Em seguida, os centróides iniciais são definidos aleatoriamente. No laço de repetição, iniciado na linha 3 e finalizado na linha 11, são executadas as etapas de cálculo da distância entre os pontos e os centróides, atribuição dos pontos aos respectivos grupos e atualização dos centróides. Destaca-se que o foco deste trabalho está justamente na análise das operações executadas dentro desse laço de repetição.
 
-
-
 O algoritmo k-means tem como objetivo dividir um conjunto de n objetos em grupos. Onde nesse processo, busca-se maximizar a similaridade entre os elementos pertencentes ao mesmo grupo e minimizar a similaridade entre grupos distintos. Utilizando o conceito de centroide, que representa o valor médio dos objetos de cada agrupamento e atua como centro de gravidade do cluster. Durante a execução do algoritmo, cada objeto é associado ao grupo cujo centróide esteja mais próximo, permitindo a formação iterativa de agrupamentos mais homogêneos. \cite{Ferrari2016} 
 
-A métrica de distância exerce papel fundamental na qualidade dos resultados obtidos pelo processo de agrupamento, visto que diferentes métricas enfatizam propriedades geométricas específicas dos dados. No algoritmo K-Means, a Distância Euclidiana é tradicionalmente utilizada para calcular a proximidade entre os dados e os centróides dos clusters. Contudo, outras métricas também podem ser empregadas, dependendo das características do conjunto de dados e do objetivo da análise. Nesse contexto, os subtópicos \ref{sec:euclidiana}, \ref{sec:manhattan}, \ref{sec:cosseno}, \ref{sec:minkowski} e \ref{sec:chebyshev} apresentam, respectivamente, as métricas Euclidiana, Manhattan, Cosseno, Minkowski e Chebyshev, destacando suas principais características e aplicações no processo de clusterização. \cite{AlKhamees2026}
+A métrica de distância exerce papel fundamental na qualidade dos resultados obtidos pelo processo de agrupamento, visto que diferentes métricas enfatizam propriedades geométricas específicas dos dados. No algoritmo K-Means, a Distância Euclidiana é tradicionalmente utilizada para calcular a proximidade entre os dados e os centróides dos clusters. Contudo, outras métricas também podem ser empregadas, dependendo das características do conjunto de dados e do objetivo da análise\cite{AlKhamees2026}. Nesse contexto, os subtópicos \ref{sec:euclidiana}, \ref{sec:manhattan}, \ref{sec:cosseno}, \ref{sec:minkowski} e \ref{sec:chebyshev} apresentam, respectivamente, as métricas Euclidiana, Manhattan, Cosseno, Minkowski e Chebyshev, destacando suas principais características e aplicações no processo de clusterização.
 
 
 
 \subsection{Distância Euclidiana} %ver o termo correto
 \label{sec:euclidiana}
 
-A distância Euclidiana é uma das métricas mais tradicionais e amplamente utilizadas em problemas de classificação e agrupamento de dados. Fundamentada no Teorema de Pitágoras, essa métrica representa a menor distância entre dois pontos em um espaço Euclidiano. \cite{Rodrigues2018}
+A distância Euclidiana é uma das métricas mais tradicionais e amplamente utilizadas em problemas de classificação e agrupamento de dados. Fundamentada no Teorema de Pitágoras, essa métrica representa a menor distância entre dois pontos em um espaço Euclidiano\cite{Rodrigues2018}.
 A Figura \ref{fig:euclidiana} apresenta a fórmula da Distância Euclidiana:
 %Fórmula da Distãncia Euclidiana
 \begin{figure}[h!]
@@ -237,7 +236,7 @@ d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
    \caption{Desenvolvimento da fórmula}
    \label{fig:euclidianacalc}
    \vspace{0.0cm}
-   {\small Fonte: Própria.}
+   {\small Fonte: Elaborada pelo autor.}
 \end{figure}
 
 Resolvendo os cálculos: 
@@ -297,7 +296,7 @@ A vantagem da Distância de Manhattan, está no fato de que seu cálculo é real
 \subsection{Medida de Cosseno} %ver o termo correto
 \label{sec:cosseno}
 
-A medida de cosseno mede o grau do ângulo entre vetores não nulos, ignorando a magnitude, ou seja, não mede diretamente a distância entre pontos, mas o grau de similaridade angular entre os pontos \cite{AlKhamees2026}. A figura \ref{fig:cosseno} apresenta a fórmula dessa medida:
+A Medida de Cosseno mede o grau do ângulo entre vetores não nulos, ignorando a magnitude, ou seja, não mede diretamente a distância entre pontos, mas o grau de similaridade angular entre os pontos \cite{AlKhamees2026}. A figura \ref{fig:cosseno} apresenta a fórmula dessa medida:
 
 %Fórmula da medida de Coseno 
 \begin{figure}[h!]
@@ -410,21 +409,22 @@ A distância de Minkowski apresenta como principal vantagem sua flexibilidade, p
 \subsection{Distância de Chebyshev} %ver o termo correto
 \label{sec:chebyshev}
 
-Conhecida como distância máxima ou norma $L_{\infty}$, essa métrica considera a maior variação entre as características analisadas, utilizando como medida de distância a máxima diferença observada entre dois pontos em qualquer dimensão do espaço de dados. \cite{AlKhamees2026}. A Figura \ref{fig:chebyshev} apresenta a fórmula:
+Conhecida como distância máxima ou norma $L_{\infty}$, essa métrica considera a maior variação entre as características analisadas, utilizando como medida de distância a máxima diferença observada entre dois pontos em qualquer dimensão do espaço de dados. \cite{AlKhamees2026}. A Figura~\ref{fig:chebyshev} apresenta a fórmula desta métrica:
 
 %Fórmula da Distância de Chebyshev
-\begin{figure}[h!]
-   \centering
-      \[
-          d(x,y) = \max_i \left| x_i - y_i \right|
-      \]
-       \vspace{-0.7cm}
-       \caption{Distància de Chebyshev}
-       \label{fig:chebyshev}
-       \vspace{0.0cm}
-       {\small Fonte: \cite{AlKhamees2026}.} 
-      
+\begin{figure}[H]
+    \centering
+    \[
+        d(x,y) = \max_i \left| x_i - y_i \right|
+    \]
+    \vspace{0.0cm}
+    \caption{Distância de Chebyshev}
+    \label{fig:chebyshev}
+    {\small Fonte: \cite{AlKhamees2026}.}
+
+    \vspace{0.0cm}
 \end{figure}
+
 
 Considerando os pontos: A=(2,3) e B=(5,7) a aplicação da fórmula ficaria da seguinte forma:
 
