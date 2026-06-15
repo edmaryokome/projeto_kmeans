@@ -63,7 +63,7 @@
 \renewcommand{\lstlistingname}{Código}
 
 
-\title{Estudo comparativo do cálculo de distância dos pontos no algoritmo K-means}
+\title{Estudo comparativo do cálculo de distância entre os pontos no algoritmo K-means}
 
 \author{
 Edmar Augusto Yokome\textsuperscript{1*}, Geraldo Francisco Donegá Zafalon\textsuperscript{2}
@@ -176,7 +176,7 @@ O algoritmo K-Means é representado no pseudocódigo \ref{alg:kmeans}:
 
 \While{$it < it\_max$}
 
-    \State calcular Distancia $D(n \times k)$ entre objetos e centroides
+    \State calcularDistancia() $D(n \times k)$ entre objetos e centroides
 
     \For{$i = 1$ até $n$}
         \State Atribuir $G[i]$ ao centróide mais próximo
@@ -544,12 +544,12 @@ Ao analisar os artigos selecionados e compará-los com a proposta desta pesquisa
 
 
 \section{Materiais e Métodos}
-Este tópico trata dos métodos e técnicas utilizadas para o desenvolvimento do trabalho proposto, onde são levados em consideração: definição da base de dados, implementação (codificação) do trabalho e análise algorítmica. 
+Esta seção aborda os métodos e técnicas utilizados para o desenvolvimento do trabalho, sendo  apresentados aspectos relacionados a definição da base de dados, a codificação do algoritmo K-Means e a análise assintótica realizada. 
 
 \subsection{Base de Dados} %ver o termo correto
 \label{sec:basedados}
 
-Na fase de implementação do projeto, o primeiro aspecto considerado foi a definição da base de dados a ser utilizada nos testes das etapas subsequentes. Inicialmente, foram realizadas pesquisas em bases de dados já existentes; entretanto, optou-se pelo desenvolvimento de um programa para geração da própria base de dados. Essa decisão foi motivada por fatores como a flexibilidade na definição do volume de dados, dimensionalidade da base e características dos dados. O pseudocódigo deste programa apresentado em Algoritmo \ref{alg:basedados}. 
+Na fase de implementação do projeto, o primeiro aspecto considerado foi a definição da base de dados a ser utilizada nos testes das etapas subsequentes. Inicialmente, foram realizadas pesquisas em bases de dados já existentes; entretanto, optou-se pelo desenvolvimento de um programa para geração da própria base de dados. Essa decisão foi motivada por fatores como a flexibilidade na definição do volume de dados, dimensionalidade da base e características dos dados. A estrutura deste programa é apresentado no pseudocódigo \ref{alg:basedados}. 
 
 %pseudocódigo gera dados
 \begin{algorithm}[htbp]
@@ -585,8 +585,8 @@ Na fase de implementação do projeto, o primeiro aspecto considerado foi a defi
 %fim pseudocódigo gera dados
 
 
-Inicialmente, são definidos a quantidade de pontos e a dimensionalidade da base de dados. Em seguida, é criado um arquivo para armazenamento dos dados gerados e inicializado o mecanismo de geração aleatória. Do conjunto total de dados, 80\% das instâncias são geradas de forma a pertencerem a um dos três agrupamentos previamente estabelecidos, enquanto os 20\% restantes correspondem a pontos gerados fora do intervalo definido para esses agrupamentos.As características dos dados sintéticos foram definidas com base em dados de 
-\textit{coordenadas geográficas}\footnote{Dados de coordenadas geográficas correspondem à representação da localização de objetos ou fenômenos na superfície terrestre por meio de um sistema de referência espacial, normalmente expresso pelas coordenadas de latitude e longitude \cite{Nedeljkovic2018}.}
+Inicialmente, são definidos a quantidade de pontos e a dimensionalidade da base de dados. Em seguida, é criado um arquivo para armazenamento dos dados gerados e inicializado o mecanismo de geração aleatória. Do conjunto total de dados, 80\% das instâncias são geradas de forma a pertencerem a um dos três agrupamentos previamente estabelecidos, enquanto os 20\% restantes correspondem a pontos gerados fora do intervalo definido para esses agrupamentos. As características dos dados sintéticos foram definidas com base em dados de 
+\textit{coordenadas geográficas.}\footnote{Dados de coordenadas geográficas correspondem à representação da localização de objetos ou fenômenos na superfície terrestre por meio de um sistema de referência espacial, normalmente expresso pelas coordenadas de latitude e longitude \cite{Nedeljkovic2018}.}
 
 A Figura \ref{fig:basedados} apresenta uma amostra dos dados gerados:
 
@@ -598,13 +598,13 @@ A Figura \ref{fig:basedados} apresenta uma amostra dos dados gerados:
     {\small Fonte: Elaborado pelo autor.}
     \label{fig:basedados}
 \end{figure}
-Na primeira linha, o valor 100 indica que a base de dados contém cem pontos, enquanto o valor 2 representa a quantidade de dimensões consideradas. Neste trabalho, essas duas dimensões correspondem às coordenadas geográficas de latitude e longitude. Com base nos testes realizados, foram definidos cinco tamanhos para as bases de dados utilizadas nos experimentos: 100.000, 200.000, 300.000, 400.000 e 500.000 pontos. 
+Na primeira linha, o valor 100 indica que a base de dados contém cem pontos, enquanto o valor 2 representa a quantidade de dimensões. Neste trabalho, essas duas dimensões correspondem às coordenadas geográficas de latitude e longitude. Com base nos testes realizados, foram definidos cinco tamanhos para as bases de dados utilizadas nos experimentos: 100.000, 200.000, 300.000, 400.000 e 500.000 pontos. 
 
 
 \subsection{Codificação do Algoritmo K-Means} %ver o termo correto
 \label{sec:codificacaokmeans}
 
-Finalizadas as etapas de compreensão do algoritmo K-Means, bem como o estudo da métrica de distância clássica empregada por esse algoritmo e de métricas alternativas, e definida a base de dados utilizada no experimento, procedeu-se à implementação do algoritmo K-Means e de suas respectivas funções na Linguagem C.
+Após a compreensão do algoritmo K-Means,da Distância Euclidiana e das métricas alternativas e a definição da base de dados para os experimentos, procedeu-se à implementação do algoritmo K-Means e das funções na linguagem C.
 
 Destaca-se que a escolha da linguagem C ocorreu devido a fatores como sua maior proximidade com o hardware e sua sintaxe relativamente próxima ao pseudocódigo, características que favorecem a análise assintótica do algoritmo. Além disso, a documentação oficial da linguagem disponibiliza informações sobre a complexidade assintótica de determinadas operações e funções, contribuindo para uma avaliação mais precisa do desempenho computacional da implementação.
 
@@ -667,14 +667,14 @@ A Tabela~\ref{tab:metricas_implementacao} apresenta uma visão geral das caracte
 \subsection{Análise Assintótica do Projeto}
 
 
-A compreensão dos conceitos associados ao comportamento assintótico de funções é fundamental para a avaliação da eficiência de algoritmos. Nesse contexto, o uso de notações assintóticas possibilita descrever o custo computacional requerido por um algoritmo durante a resolução de problemas com diferentes tamanhos de entrada.\cite{Serpa2021}
+A compreensão dos conceitos associados ao comportamento assintótico é fundamental para a avaliação da eficiência de algoritmos. Nesse contexto, o uso de notações assintóticas possibilita descrever o custo computacional requerido por um algoritmo durante a resolução de problemas com diferentes tamanhos de entrada.\cite{Serpa2021}
 Nesta etapa do estudo, foi utilizada a Notação Big O para analisar a complexidade da implementação do algoritmo K-Means. Para realizar essa análise, o programa foi dividido em etapas funcionais, permitindo o cálculo individual da complexidade de cada trecho e, posteriormente, a obtenção da complexidade total da implementação. A Tabela ~\ref{tab:complexidade_kmeans} apresenta o detalhamento da complexidade associada a cada uma das etapas do programa. 
 
 
 
 \begin{table}[H]
 \centering
-\caption{Resumo da implementação do algoritmo K-Means e análise de complexidade}
+\caption{Etapas da implementação do algoritmo K-Means e análise de complexidade}
 \label{tab:complexidade_kmeans}
 
 \begin{tabularx}{\columnwidth}{|>{\raggedright\arraybackslash}X|c|}
@@ -880,7 +880,7 @@ Dev-C++ 5.11 \\ \hline
 \end{table} 
 
 
-Os subtópicos \ref{subsec:tempoexecucao}, \ref{subsec:nComparacoes} e \ref{subsec:nTrocas} apresentam os experimentos realizados considerando as métricas de tempo de execução, número de comparações e número de trocas, sendo esta última definida, neste trabalho, como a quantidade de vezes em que os pontos foram realocados entre grupos. 
+As seções \ref{subsec:tempoexecucao}, \ref{subsec:nComparacoes} e \ref{subsec:nTrocas} apresentam os experimentos realizados considerando as métricas de tempo de execução, número de comparações e número de trocas, sendo esta última definida, neste trabalho, como a quantidade de vezes em que os pontos foram realocados entre grupos. 
 
 
 \subsection{Tempo de Execução}
