@@ -835,7 +835,6 @@ A análise de complexidade permitiu identificar que a substituição das métric
 
 Analisar algoritmo consiste em estimar os recursos computacionais necessários para sua execução. Entre esses recursos podem ser considerados memória, largura de banda de comunicação e consumo de energia; entretanto, o tempo de computação permanece como a métrica mais frequentemente utilizada. Em análises experimentais, esse custo temporal pode ser representado por medidas operacionais específicas, como número de comparações, trocas ou tempo total de execução \cite{Cormen2024}. 
 
-
 Realizar experimentos em algoritmos é fundamental para complementar resultados obtidos por meio de análise teóricas, como por exemplo, a análise assintótica, permitindo uma compreensão mais ampla do comportamento do algoritmo em cenários de execução. A análise assintótica fornece garantias importantes sobre crescimento de complexidade e limites teóricos, e frequentemente se apoia em modelos simplificados de computação que desconsideram fatores práticos, como hierarquia de memória, cache de memória, características do compilador e propriedades específicas das entradas de dados. Nesse contexto, a experimentação possibilita avaliar desempenho efetivo, validar hipóteses teóricas, identificar limitações dos modelos analíticos e apoiar o desenvolvimento de algoritmos mais eficientes. A análise experimental não substitui a teoria, mas amplia sua capacidade explicativa ao aproximar os resultados matemáticos das condições reais de aplicação computacional\cite{McGeoch2001}.
 
 Nesta etapa do trabalho, o primeiro aspecto considerado foi a infraestrutura computacional disponível para a execução dos experimentos. A definição do ambiente experimental é importante para garantir transparência, reprodutibilidade e adequada interpretação dos resultados obtidos. A Tabela ~\ref{tab:hardware_software} apresenta os recursos de hardware e software utilizados durante a realização dos experimentos.
@@ -903,8 +902,11 @@ tempoInicial = time(NULL);
 tempoInicial = clock();
 
 \end{lstlisting}
+\begin{center}
+{\small Fonte: Elaborado pelo autor.}
+\end{center} 
 
-Nesse trecho foi obtido o tempo atual do sistema, utilizado como referência para a medição do tempo de execução do algoritmo. Destaca-se que o objetivo foi calcular exclusivamente o tempo gasto nas etapas principais do K-Means, compreendendo o cálculo das distâncias entre os pontos e os centróides, a definição dos grupos e o reajuste dos centróides. Dessa forma, essas instruções foram posicionadas imediatamente antes do laço de repetição responsável pela execução dessas operações. Após o término do laço de repetição, foram inseridas as seguintes linhas de código:
+Nesse trecho foi obtido o tempo atual do sistema, utilizado como referência para a medição do tempo de execução do algoritmo. Destaca-se que o objetivo foi calcular exclusivamente o tempo gasto nas etapas principais do K-Means, compreendendo o cálculo das distâncias entre os pontos e os centróides, a definição dos grupos e o reajuste dos centróides. Dessa forma, essas instruções foram posicionadas antes do laço de repetição responsável pela execução dessas operações. Após o término do laço de repetição, foram inseridas as seguintes linhas de código:
 
 \begin{lstlisting}[
 language=C,
@@ -920,6 +922,9 @@ tempoFinal = time(NULL);
 tempoFinal = clock();
 
 \end{lstlisting}
+\begin{center}
+{\small Fonte: Elaborado pelo autor.}
+\end{center} 
 
 Para obter o tempo final em segundos, foi implementada a seguinte linha de código:
 \begin{lstlisting}[
@@ -936,6 +941,9 @@ tempo_execucao = (double)(tempoFinal -
 tempoInicial) / CLOCKS_PER_SEC;
 
 \end{lstlisting}
+\begin{center}
+{\small Fonte: Elaborado pelo autor.}
+\end{center} 
 
 Com o objetivo de encontrar o tempo de execução em segundos. A tabela~\ref{tab:calcTempo} apresenta os experimentos com 100.000 pontos:
 
@@ -1182,7 +1190,7 @@ Distância de Chebyshev
 
 % fim tabela comparações
 
-A análise dos resultados permite identificar algumas características relevantes relacionadas ao comportamento computacional de cada métrica. Entre as principais características, estão: 
+A análise dos resultados permite identificar algumas características relevantes relacionadas ao comportamento computacional de cada métrica. Entre as características levantadas, estão: 
 \begin{itemize}
 \item Observa-se, de forma geral, que o número de comparações tende a aumentar conforme cresce a quantidade de pontos das bases de dados, comportamento esperado em algoritmos de agrupamento como o K-Means.
 \item A Distância Euclidiana apresentou crescimento significativo na quantidade de comparações, especialmente nas bases com 200.000, 400.000 e 500.000 pontos, indicando maior quantidade de verificações durante o processo de agrupamento.
@@ -1198,7 +1206,7 @@ A análise dos resultados permite identificar algumas características relevante
 \label{subsec:nTrocas}
 A análise da eficiência de algoritmos pode envolver a contagem do número de vezes que determinadas operações são executadas. Desta forma, este trabalho, além de usar o tempo de execução e do número de comparações, trabalha com a métrica do número de mudanças de agrupamento, para avaliar o algoritmo K-Means Clássico e Alterado \cite{Knuth1998}. 
 
-Para contar quantas vezes os pontos mudaram de agrupamentos, foram feitas as seguintes mudanças na implementação da implementação do Algoritmo K-Means: 
+Para contar quantas vezes os pontos mudaram de agrupamentos, foram feitas as seguintes mudanças na implementação do Algoritmo K-Means: 
 
 \begin{lstlisting}[
     language=C,
@@ -1221,7 +1229,7 @@ if (rotulo[i] != grupo) {
 {\small Fonte: Elaborado pelo autor.}
 \end{center}
 
-O Código \ref{lst:trocas} apresenta o mecanismo utilizado para contabilizar as mudanças de agrupamento. Sempre que um ponto é realocado para um grupo diferente daquele ao qual estava previamente associado, os contadores de trocas global e por iteração são incrementados. A variável trocas corresponde ao número de realocações de pontos entre grupos realizadas ao longo da execução do algoritmo.
+O Código \ref{lst:trocas} apresenta o mecanismo utilizado para contabilizar as mudanças de agrupamento. Sempre que um ponto é realocado para um grupo diferente daquele ao qual estava previamente associado, os contadores de trocas global e por iteração são incrementados. A variável $trocas$ corresponde ao número de realocações de pontos entre grupos realizadas ao longo da execução do algoritmo.
 
 Foi acrescentado uma condicional, e inserido duas linhas de códigos (2 e 3), onde a linha 2 representa a variável que faz a contagem da quantidade de vezes que os pontos mudam de agrupamento. Na linha 3 contabiliza apenas as mudanças de agrupamento ocorridas na iteração atual. A linha 4 é usada para fazer a mudança de agrupamento e foi realocada para dentro do trecho da condicional. 
 
