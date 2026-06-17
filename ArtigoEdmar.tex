@@ -1332,7 +1332,7 @@ O desenvolvimento deste trabalho teve os seguintes resultados:
     
     \item Implementação de scripts em Python para geração dos gráficos utilizados na análise dos resultados;
     
-    \item Implementação de um programa em Linguagem C para a geração das bases de dados utilizadas nos experimentos;
+    \item Implementação de um programa em Linguagem C para gerar as bases de dados utilizadas nos experimentos;
     
     \item Execução dos experimentos utilizando as bases de dados geradas, cujos resultados são apresentados nas figuras:~\ref{fig:grafTempo}, ~\ref{fig:grafComparacao} e ~\ref{fig:grafMudanca} , em forma de gráficos.
 \end{itemize}
@@ -1343,11 +1343,11 @@ A partir dos dados da Tabela~\ref{tab:distancias}, foi elaborado o gráfico de t
     \centering
      \includegraphics[width=0.4\textwidth]{tempo.png}
     \caption{Gráfico de Tempo de Execução}
-    {\small Fonte: própria.}
+    {\small Fonte: Elaborado pelo autor.}
     \label{fig:grafTempo}
 \end{figure}
 
-Ao análisar o gráfico é possível destacar fazer as seguintes considerações: 
+Ao análisar o gráfico, é possível destacar as seguintes considerações: 
 
 \begin{itemize}
 
@@ -1369,11 +1369,11 @@ A Figura~\ref{fig:grafComparacao} apresenta o gráfico do número de comparaçõ
     \centering
      \includegraphics[width=0.5\textwidth]{comparacao.png}
     \caption{Gráfico de Número de Comparações}
-    {\small Fonte: própria.}
+    {\small Fonte: Elaborado pelo autor.}
     \label{fig:grafComparacao}
 \end{figure}
 
-De maneira geral, observa-se que conforme aumenta o volume de dados resulta no crescimento da quantidade de comparações para todas as métricas, embora o crescimento ocorra de forma distinta. Entre as características levantadas estão:
+De maneira geral, observa-se que conforme aumenta o volume de dados resulta no crescimento da quantidade de comparações para todas as métricas, embora o crescimento ocorra de forma distinta. Outras características foram levantadas:
 
 \begin{itemize}
     \item \textbf{Distância Euclidiana}: apresentou comportamento oscilante, atingindo aproximadamente 27 milhões de comparações para 500.000 pontos.
@@ -1394,12 +1394,12 @@ A Figura~\ref{fig:grafMudanca} apresenta o gráfico do número de mudança de ag
     \centering
      \includegraphics[width=0.5\textwidth]{mudGrupo.png}
     \caption{Gráfico de Mudança de Agrupamento}
-    {\small Fonte: própria.}
+    {\small Fonte: Elaborado pelo autor.}
     \label{fig:grafMudanca}
 \end{figure}
 
 
-De modo geral, observa-se que o aumento da quantidade de dados provoca crescimento no número de mudanças de agrupamento para todas as métricas analisadas, indicando maior esforço do algoritmo para alcançar a convergência em conjuntos maiores. Entre as principais características levantadas estão:
+De modo geral, observa-se que o aumento da quantidade de dados provoca crescimento no número de mudanças de agrupamento para todas as métricas analisadas, indicando maior esforço do algoritmo para alcançar a convergência em conjuntos maiores. Entre outras características estão:
 
 \begin{itemize}
     \item \textbf{Distância Euclidiana}: apresentou crescimento gradual ao longo dos experimentos. Entre 300.000 e 400.000 pontos houve um aumento moderado, seguido de crescimento mais acentuado para 500.000 pontos. Finalizou com aproximadamente 620 mil mudanças, mantendo um comportamento relativamente estável quando comparada às demais métricas.
